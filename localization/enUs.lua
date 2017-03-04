@@ -110,22 +110,12 @@ MPOWA_CHECKBUTTON_GROWOUT_TOOLTIP = "Check this to get an grow out animation whe
 MPOWA_EDITBOX_PLAYER_NAME = "Playername:"
 MPOWA_EDITBOX_PLAYER_NAME_TOOLTIP = "Insert the exact name of the designated player."
 
-MPOWA_AURA_GONE_SELF = "(.+) fades from you%."
-MPOWA_AURA_GONE_OTHER = "(.+) fades from (.+)%."
-
 MPOWA_CHECKBUTTON_HIDE_STACKS_TOOLTIP = "Check this to hide stacks"
 MPOWA_CHECKBUTTON_HIDE_STACKS = "Hide stacks"
 MPOWA_CHECKBUTTON_USE_DESCRIPTION_TOOLTIP = "Check this to use the buff texture as well for an second indicator to get the aura."
 MPOWA_CHECKBUTTON_USE_DESCRIPTION = "Use texture"
 MPOWA_EDITBOX_SecondSpecifier_TOOLTIP = "Insert the exact name of an the aura texture."
 MPOWA_EDITBOX_SecondSpecifier = "Exact texture name:"
-
-MPOWA_WINDFURY_GAIN = "You gain Windfury Totem."
-MPOWA_WINDFURY_GAIN2 = "You gain Windfury Weapon."
-MPOWA_WINDFURY_GAIN3 = "You gain Windfury."
-MPOWA_WINDFURY_GONE = "Windfury Totem fades from you."
-MPOWA_WINDFURY_GONE2 = "Windfury Weapon fades from you."
-MPOWA_WINDFURY_GONE3 = "Windfury fades from you."
 
 MPOWA_ONSTART = "OnStart"
 MPOWA_ONFINISHED = "OnFinished"

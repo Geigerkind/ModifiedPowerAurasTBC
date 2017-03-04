@@ -238,11 +238,6 @@ function MPOWA:Iterate(unit)
 		self:InInstance()
 	end
 	
-	if self.Windfury then
-		self:Push("Windfury", "player", 42, false, "Windfury")
-		self:Push("Windfury Totem", "player", 43, false, "Windfury Totem")
-	end
-	
 	for i=1, 40 do
 		local buff, debuff
 		buff = UnitBuff(unit, i)

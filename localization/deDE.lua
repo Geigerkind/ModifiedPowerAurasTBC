@@ -109,22 +109,12 @@ if (GetLocale() == "deDE") then
 	MPOWA_EDITBOX_PLAYER_NAME = "Spielername:"
 	MPOWA_EDITBOX_PLAYER_NAME_TOOLTIP = "Füge den Namen, des Raid/Gruppenmitglieds ein."
 	
-	MPOWA_AURA_GONE_SELF = "(.+) schwindet von euch%."
-	MPOWA_AURA_GONE_OTHER = "(.+) schwindet von (.+)%."
-	
 	MPOWA_CHECKBUTTON_HIDE_STACKS_TOOLTIP = "Kreuze das an, um die Anzahl zu verstecken"
 	MPOWA_CHECKBUTTON_HIDE_STACKS = "Verstecke Anzahl"
 	MPOWA_CHECKBUTTON_USE_DESCRIPTION_TOOLTIP = "Kreuze das an, um die Auratextur als zweiten Indikator für die Erkennung zu verwenden."
 	MPOWA_CHECKBUTTON_USE_DESCRIPTION = "Nutze Textur"
 	MPOWA_EDITBOX_SecondSpecifier_TOOLTIP = "Schreibe hier den genauen Texturnamen der aura hinein."
 	MPOWA_EDITBOX_SecondSpecifier = "Exakter Texturname:"
-	
-	MPOWA_WINDFURY_GAIN = "Ihr bekommt 'Totem des Windzorns'."
-	MPOWA_WINDFURY_GAIN2 = "Ihr bekommt 'Waffe des Windzorns'."
-	MPOWA_WINDFURY_GAIN3 = "Ihr bekommt 'Windfury'."
-	MPOWA_WINDFURY_GONE = "'Totem des Windzorns' schwindet von Euch."
-	MPOWA_WINDFURY_GONE2 = "'Waffe des Windzorns' schwindet von Euch."
-	MPOWA_WINDFURY_GONE3 = "'Windfury' schwindet von Euch."
 	
 	MPOWA_ONSTART = "Erscheint"
 	MPOWA_ONFINISHED = "Verschwindet"

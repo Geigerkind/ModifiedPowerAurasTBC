@@ -90,8 +90,6 @@ MPOWA.SOUND = {
 	[64] = "Hit8.ogg", -- Thanks to Sillywet!
 }
 
-MPOWA.Windfury = false
-
 function MPOWA:OnEvent(event, arg1)
 	if event == "UNIT_AURA" then
 		if arg1 == "target" or self.groupByUnit[arg1] then
@@ -118,14 +116,6 @@ function MPOWA:OnEvent(event, arg1)
 		self:GetGroup()
 	elseif event == "PLAYER_AURAS_CHANGED" then
 		self:Iterate("player")
-	elseif event == "CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS" then
-		if arg1==MPOWA_WINDFURY_GAIN or arg1==MPOWA_WINDFURY_GAIN2 or arg1==MPOWA_WINDFURY_GAIN3 then
-			self.Windfury = true
-		end
-	elseif event == "CHAT_MSG_SPELL_AURA_GONE_SELF" then
-		if arg1==MPOWA_WINDFURY_GONE or arg1==MPOWA_WINDFURY_GONE2 or arg1==MPOWA_WINDFURY_GONE3 then
-			self.Windfury = false
-		end
 	else
 		self:Init()
 		self.loaded = true
