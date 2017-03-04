@@ -1,0 +1,37 @@
+## Interface: 20400
+## Title: MPOWA |cFFFF8080-Shino-|r
+## Title-deDE: MPOWA |cFFFF8080-Shino-|r
+## Title-enGB: MPOWA |cFFFF8080-Shino-|r
+## Notes: Modified Power Auras is an advanced version of the original Power Auras from Sinesther. 
+## Notes-deDE: Modified Power Auras ist eine erweitetere Version von Power Auras von Sinesther.
+## Notes-enGB: Modified Power Auras is an advanced version of the original Power Auras from Sinesther. 
+## Author: Shino <Synced> - Kronos
+## SavedVariables: MPOWA_PROFILE
+## SavedVariablesPerCharacter: MPOWA_SAVE
+## Version: 1
+
+libs\LibStub\LibStub.lua
+libs\Classy-1.0\Classy-1.0.lua
+libs\Sol\Sol.lua
+libs\AnimationGroup\AnimationGroup.lua
+libs\AnimationGroup\curves.lua
+libs\AnimationGroup\group.lua
+libs\AnimationGroup\animation.lua
+libs\AnimationGroup\alpha.lua
+libs\AnimationGroup\path.lua
+libs\AnimationGroup\rotation.lua
+libs\AnimationGroup\scale.lua
+libs\AnimationGroup\translation.lua
+
+localization\enUS.lua
+localization\deDE.lua
+
+Init.lua
+Util.lua
+Conditions.lua
+Animation.lua
+Auras.lua
+GUI.lua
+Start.lua
+ModifiedPowerAuras.xml
+
