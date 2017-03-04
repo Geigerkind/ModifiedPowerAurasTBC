@@ -152,3 +152,6 @@ MPOWA_EDITBOX_GROUPNUMBER_TOOLTIP = "Enter the number of the dynamic group paren
 MPOWA_EDITBOX_GROUPNUMBER = "Enter group number"
 
 MPOWA_EDITBOX_TOOLTIP_ICONPATH = "Icon path. Enter the path here if it is not in the list or found by itself."
+
+MPOWA_CHECKBUTTON_MINE_TOOLTIP = "Indicates if it was cast by you. (Using BuffLib of Schaka)"
+MPOWA_CHECKBUTTON_MINE = "Mine"

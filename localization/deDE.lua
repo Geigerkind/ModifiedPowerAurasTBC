@@ -151,4 +151,7 @@ if (GetLocale() == "deDE") then
 	MPOWA_EDITBOX_GROUPNUMBER = "Gruppenummer"
 	
 	MPOWA_EDITBOX_TOOLTIP_ICONPATH = "Iconpfad. Schreibe hier den Pfad rein, wenn er nicht automatisch gefunden wird oder in der Liste zu finden ist."
+
+	MPOWA_CHECKBUTTON_MINE_TOOLTIP = "Von dir gezaubert. (Nutzt die BuffLib von Schaka)"
+	MPOWA_CHECKBUTTON_MINE = "Meins"
 end

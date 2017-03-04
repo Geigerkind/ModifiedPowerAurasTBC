@@ -1046,6 +1046,22 @@
 									</Layer>
 								</Layers>
 							</EditBox>
+							<CheckButton name="$parent_Checkbutton_Mine" inherits="MPowa_CheckTemplate">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parent_Editbox" relativePoint="BOTTOMLEFT">
+										<Offset x="70" y="-17" />
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = MPOWA_CHECKBUTTON_MINE_TOOLTIP
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_MINE)
+									</OnLoad>
+									<OnClick>
+										MPOWA:Checkbutton("castbyme")
+									</OnClick>
+								</Scripts>
+							</CheckButton>
 							<CheckButton name="$parent_Checkbutton_ShowCooldowns" inherits="MPowa_CheckTemplate">
 								<Anchors>
 									<Anchor point="TOPLEFT" relativeTo="$parent_Editbox" relativePoint="BOTTOMLEFT">

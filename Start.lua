@@ -59,7 +59,8 @@ function MPOWA:CreateSave(i)
 		scalefactor = 0.8,
 		isdynamicgroup = false,
 		groupnumber = 0,
-		cpstacks = ">=0"
+		cpstacks = ">=0",
+		castbyme = false,
 	}
 end
 

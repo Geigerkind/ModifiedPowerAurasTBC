@@ -239,12 +239,12 @@ function MPOWA:Iterate(unit)
 	end
 	
 	for i=1, 40 do
-		local buff, debuff
-		buff = UnitBuff(unit, i)
-		self:Push(buff, unit, i, false)
+		local buff, debuff, castbyme
+		buff,_,_,_,_,_,castbyme = UnitBuff(unit, i)
+		self:Push(buff, unit, i, false, castbyme)
 		if i<17 then
-			debuff = UnitDebuff(unit, i)
-			self:Push(debuff, unit, i, true)
+			debuff,_,_,_,_,_,_,castbyme = UnitDebuff(unit, i)
+			self:Push(debuff, unit, i, true,castbyme)
 		end
 		if not buff and not debuff then break end
 	end
@@ -272,7 +272,7 @@ function MPOWA:Iterate(unit)
 	end
 end
 
-function MPOWA:Push(aura, unit, i, isdebuff)
+function MPOWA:Push(aura, unit, i, isdebuff, castbyme)
 	if self.auras[aura] then
 		for cat, val in pairs(self.auras[aura]) do
 			local path = MPOWA_SAVE[val]
@@ -286,7 +286,7 @@ function MPOWA:Push(aura, unit, i, isdebuff)
 				end
 				tex = strlower(strsub(tex, strfind(tex, "Icons")+6))
 			end
-			if path["isdebuff"]==isdebuff and ((path["secondspecifier"] and (strlower(path["secondspecifiertext"])==tex)) or not path["secondspecifier"]) then
+			if (not path["castbyme"] or (path["castbyme"] and castbyme)) and path["isdebuff"]==isdebuff and ((path["secondspecifier"] and (strlower(path["secondspecifiertext"])==tex)) or not path["secondspecifier"]) then
 				if self:TernaryReturn(val, "alive", self:Reverse(UnitIsDeadOrGhost("player"))) and self:TernaryReturn(val, "mounted", self.mounted) and self:TernaryReturn(val, "incombat", UnitAffectingCombat("player")) and self:TernaryReturn(val, "inparty", self.party) and self:TernaryReturn(val, "inraid", UnitInRaid("player")) and self:TernaryReturn(val, "inbattleground", self.bg) and self:TernaryReturn(val, "inraidinstance", self.instance) and not path["cooldown"] and self:IsStacks(GetComboPoints("player", "target"), val, "cpstacks") then
 					BuffExist[val] = true
 					if path["enemytarget"] and unit == "target" then
