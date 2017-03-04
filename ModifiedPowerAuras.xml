@@ -1002,50 +1002,6 @@
 									</Layer>
 								</Layers>
 							</EditBox>
-							<EditBox name="$parent_Editbox_DebuffDuration" autoFocus="false" inherits="InputBoxTemplate">
-								<Size x="65" y="16" />
-								<Anchors>
-									<Anchor point="LEFT" relativeTo="$parent_Editbox_Stacks" relativePoint="RIGHT">
-										<Offset x="10" y="0" />
-									</Anchor>
-								</Anchors>
-								<FontString inherits="ChatFontNormal" bytes="200" />
-								<Scripts>
-									<OnLoad>
-										this:SetMaxLetters(200)
-										this.aide = MPOWA_EDITBOX_DEBUFFDURATION_TOOLTIP
-										getglobal(this:GetName().."Text"):SetText(MPOWA_EDITBOX_DEBUFFDURATION)
-									</OnLoad>
-									<OnShow>
-										this:ClearFocus()
-									</OnShow>
-									<OnEnterPressed>
-										this:ClearFocus()
-									</OnEnterPressed>
-									<OnTextChanged>
-										MPOWA:Editbox_Duration(this)
-									</OnTextChanged>
-									<OnEnter>
-										GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
-										GameTooltip:SetText(this.aide, nil, nil, nil, nil, 1)
-									</OnEnter>
-									<OnLeave>
-										GameTooltip:Hide()
-									</OnLeave>
-								</Scripts>
-								<Layers>
-									<Layer level="OVERLAY">
-										<FontString name="$parentText" inherits="GameFontNormalSmall" justifyH="LEFT" text="">
-											<Size x="120" y="20" />
-											<Anchors>
-												<Anchor point="BOTTOMLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
-													<Offset x="0" y="0" />
-												</Anchor>
-											</Anchors>
-										</FontString>
-									</Layer>
-								</Layers>
-							</EditBox>
 							<EditBox name="$parent_Editbox_SECLEFT" autoFocus="false" inherits="InputBoxTemplate">
 								<Size x="65" y="16" />
 								<Anchors>
