@@ -1,5 +1,5 @@
 CreateFrame("Frame", "MPOWA", UIParent)
-MPOWA.Build = 35
+MPOWA.Build = 36
 MPOWA.Cloaded = false
 MPOWA.loaded = false
 MPOWA.selected = 1
@@ -16,23 +16,10 @@ MPOWA.RaidGroupMembers = {}
 MPOWA.testall = false
 
 MPOWA.active = {}
-MPOWA.pushed = {}
-MPOWA.activeTimer = {}
-MPOWA.lastCount = {}
 MPOWA.mounted = false
 MPOWA.party = false
 MPOWA.bg = false
 MPOWA.instance = false
-MPOWA.Zones = {
-	[MPOWA_ZONES_MC] = true,
-	[MPOWA_ZONES_BWL] = true,
-	[MPOWA_ZONES_ONY] = true,
-	[MPOWA_ZONES_ZG] = true,
-	[MPOWA_ZONES_AQ401] = true,
-	[MPOWA_ZONES_AQ20] = true,
-	[MPOWA_ZONES_AQ402] = true,
-	[MPOWA_ZONES_NAXX] = true,
-}
 
 MPOWA.SOUND = {
 	[0] = "None",
@@ -111,9 +98,9 @@ function MPOWA:OnEvent(event, arg1)
 			self:Iterate(arg1)
 		end
 	elseif event == "PLAYER_TARGET_CHANGED" then
-		for c, v in self.auras do
+		for c, v in pairs(self.auras) do
 			if v then
-				for cat, val in v do
+				for cat, val in pairs(v) do
 					if self.active[val] or self.frames[val][1]:IsVisible() then
 						local p = MPOWA_SAVE[val]
 						if p["enemytarget"] or p["friendlytarget"] then

@@ -112,15 +112,6 @@ if (GetLocale() == "deDE") then
 	MPOWA_AURA_GONE_SELF = "(.+) schwindet von euch%."
 	MPOWA_AURA_GONE_OTHER = "(.+) schwindet von (.+)%."
 	
-	MPOWA_ZONES_MC = "Geschmolzener Kern"
-	MPOWA_ZONES_BWL = "Pechschwingenhort"
-	MPOWA_ZONES_ONY = "Onyxias Hort"
-	MPOWA_ZONES_ZG = "Zul'Gurub"
-	MPOWA_ZONES_AQ401 = "Ahn'Qiraj"
-	MPOWA_ZONES_AQ402 = "Tempel von Ahn'Qiraj"
-	MPOWA_ZONES_AQ20 = "Ruinen von Ahn'Qiraj"
-	MPOWA_ZONES_NAXX = "Naxxramas"
-
 	MPOWA_CHECKBUTTON_HIDE_STACKS_TOOLTIP = "Kreuze das an, um die Anzahl zu verstecken"
 	MPOWA_CHECKBUTTON_HIDE_STACKS = "Verstecke Anzahl"
 	MPOWA_CHECKBUTTON_USE_DESCRIPTION_TOOLTIP = "Kreuze das an, um die Auratextur als zweiten Indikator für die Erkennung zu verwenden."

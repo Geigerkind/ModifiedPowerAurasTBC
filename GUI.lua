@@ -494,7 +494,7 @@ function MPOWA:ApplyDynamicGroup(i)
 			self.frames[i][5] = CreateFrame("Frame")
 		end
 		local inc = 0
-		for cat, va in MPOWA_SAVE do
+		for cat, va in pairs(MPOWA_SAVE) do
 			if self.frames[cat] and (tnbr(va["groupnumber"])==i or cat==i) and (self.active[cat] or va["test"] or self.testAll) then
 				self.frames[cat][1]:ClearAllPoints()
 				self.frames[cat][1]:SetPoint("TOPLEFT", self.frames[i][5], "TOPRIGHT", inc*70, 0)
@@ -584,7 +584,7 @@ function MPOWA:Remove()
 					self.active[self.selected+coeff] = false
 				end
 			else
-				for cat, val in self.auras[MPOWA_SAVE[self.selected+coeff]["buffname"]] do
+				for cat, val in pairs(self.auras[MPOWA_SAVE[self.selected+coeff]["buffname"]]) do
 					if self.active[val] then
 						self.active[val] = false;
 					end
@@ -740,11 +740,6 @@ function MPOWA:Edit()
 		MPowa_ConfigFrame_Container_6_IsDynamicGroup:SetChecked(MPOWA_SAVE[self.CurEdit].isdynamicgroup)
 		MPowa_ConfigFrame_Container_6_Editbox_GroupNumber:SetText(""..(MPOWA_SAVE[self.CurEdit].groupnumber or ""))
 		
-		if MPOWA_SAVE[self.CurEdit].enemytarget or MPOWA_SAVE[self.CurEdit].friendlytarget then
-			MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration:Show()
-		else
-			MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration:Hide()
-		end
 		if MPOWA_SAVE[self.CurEdit].flashanim then
 			MPowa_ConfigFrame_Container_2_2_Editbox_FlashAnim:Show()
 		else
@@ -859,6 +854,9 @@ function MPOWA:Checkbutton_FlashAnim()
 	if MPOWA_SAVE[self.CurEdit]["flashanim"] then
 		MPOWA_SAVE[self.CurEdit]["flashanim"] = false
 		MPowa_ConfigFrame_Container_2_2_Editbox_FlashAnim:Hide()
+		if self.frames[self.CurEdit][1].flash:IsPlaying() then
+			self.frames[self.CurEdit][1].flash:Stop()
+		end
 		self.frames[self.CurEdit][1].flash = nil
 	else
 		MPOWA_SAVE[self.CurEdit]["flashanim"] = true
@@ -1146,7 +1144,7 @@ end
 
 function MPOWA:GetTableLength(T)
 	local count = 0
-	for _ in T do 
+	for _ in pairs(T) do 
 		count = count + 1 
 	end 
 	return count

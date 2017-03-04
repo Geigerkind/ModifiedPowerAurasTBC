@@ -113,15 +113,6 @@ MPOWA_EDITBOX_PLAYER_NAME_TOOLTIP = "Insert the exact name of the designated pla
 MPOWA_AURA_GONE_SELF = "(.+) fades from you%."
 MPOWA_AURA_GONE_OTHER = "(.+) fades from (.+)%."
 
-MPOWA_ZONES_MC = "Molten Core"
-MPOWA_ZONES_BWL = "Blackwing Lair"
-MPOWA_ZONES_ONY = "Onyxia's Lair"
-MPOWA_ZONES_ZG = "Zul'Gurub"
-MPOWA_ZONES_AQ401 = "Ahn'Qiraj"
-MPOWA_ZONES_AQ402 = "Temple of Ahn'Qiraj"
-MPOWA_ZONES_AQ20 = "Ruins of Ahn'Qiraj"
-MPOWA_ZONES_NAXX = "Naxxramas"
-
 MPOWA_CHECKBUTTON_HIDE_STACKS_TOOLTIP = "Check this to hide stacks"
 MPOWA_CHECKBUTTON_HIDE_STACKS = "Hide stacks"
 MPOWA_CHECKBUTTON_USE_DESCRIPTION_TOOLTIP = "Check this to use the buff texture as well for an second indicator to get the aura."

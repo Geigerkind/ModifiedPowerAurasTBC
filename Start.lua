@@ -84,7 +84,7 @@ function MPOWA:Init()
 		MPOWA_PROFILE = {}
 	end
 	
-	for cat, val in MPOWA_SAVE do
+	for cat, val in pairs(MPOWA_SAVE) do
 		if val["used"] or (MPOWA_SAVE[cat+1] and MPOWA_SAVE[cat+1]["used"]) then
 			if not self.frames[cat] then
 				self.frames[cat] = {}

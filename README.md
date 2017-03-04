@@ -10,7 +10,6 @@ Modified Power Auras is the advanced version of the AddOn Power Auras. It is a l
 * Use Icons instead of symbols
 * More performant
 * Show stacks of auras
-* Show double procs (Holy strength)
 * Show **enemy buffs and debuffs**
 * Show your buffs and debuffs
 * Show cooldown on trinkets or abilities
@@ -23,19 +22,12 @@ Modified Power Auras is the advanced version of the AddOn Power Auras. It is a l
 
 ### Installing Instructions ###
 
-* Download the AddOn [here](https://github.com/Geigerkind/ModifiedPowerAuras/releases)
+* Download the AddOn [here](https://github.com/Geigerkind/ModifiedPowerAurasTBC/releases)
 * Rename the unziped folder to "ModifiedPowerAuras"
 * Place the folder into your AddOn directory in your World of Warcraft folder
 * Start the game
 * Type in **/mpowa** to open the configuration frame
 * Enjoy
-
-
-
-#**Support me!**#   
-1. [report](https://github.com/Geigerkind/ModifiedPowerAuras/issues) bugs that you found.
-2. Suggest improvements in this thread. 
-3. You can also [donate](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=57SWBZ3B7RTTQ) for my projects if you like or consider becoming an [patreon](https://www.patreon.com/legacylogs).
 
 
 ### How does it look like? ###
@@ -45,4 +37,10 @@ Modified Power Auras is the advanced version of the AddOn Power Auras. It is a l
 
 
 **Auras on testmode:**  
-![Testmode](http://i.imgur.com/0CZScUt.png)
+![Testmode](http://i.imgur.com/0CZScUt.png)  
+
+
+#**Support me!**#   
+1. [report](https://github.com/Geigerkind/ModifiedPowerAurasTBC/issues) bugs that you found.
+2. Suggest improvements. 
+3. You can also [donate](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=57SWBZ3B7RTTQ) for my projects if you like or consider becoming an [patreon](https://www.patreon.com/legacylogs).

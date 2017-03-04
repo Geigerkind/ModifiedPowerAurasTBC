@@ -1,4 +1,3 @@
-local stf = strfind
 local _G = getglobal
 local tinsert = table.insert
 local tremove = table.remove
@@ -9,43 +8,28 @@ local strgfind = string.gfind
 local strfind = string.find
 local GT = GetTime
 local tnbr = tonumber
+local UnitIsDeadOrGhost = UnitIsDeadOrGhost
+local UnitAffectingCombat = UnitAffectingCombat
+local UnitInRaid = UnitInRaid
+local UnitBuff = UnitBuff 
+local UnitDebuff = UnitDebuff
+local strsub = strsub
+local strlower = strlower
+local GetComboPoints = GetComboPoints
+local GetSpellCooldown = GetSpellCooldown
+local GetInventoryItemCooldown = GetInventoryItemCooldown
+local GetContainerItemCooldown = GetContainerItemCooldown
+local GetContainerItemLink = GetContainerItemLink
+local GetInventoryItemLink = GetInventoryItemLink
+local GetContainerNumSlots = GetContainerNumSlots
+local GetSpellName = GetSpellName
 
 local UpdateTime, LastUpdate = 0.05, 0
-
---[[
--- If I just find a way to confirm that the press worked
-
-local castByMe = {}
-local oldUseAction = UseAction
-UseAction = function(slot, checkCursor, onSelf)
-	MPowa_Tooltip:SetOwner(UIParent, "ANCHOR_NONE")
-	MPowa_Tooltip:ClearLines()
-	MPowa_Tooltip:SetAction(slot)
-	castByMe[MPowa_TooltipTextLeft1:GetText()] = GT()
-	oldUseAction(slot, checkCursor, onSelf)
-end
-
-local oldCastSpellByName = CastSpellByName
-CastSpellByName = function(spellName, onSelf)
-	castByMe[spellName] = GT()
-	oldCastSpellByName(spellName, onSelf)
-end
-
-local oldCastSpell = CastSpell
-CastSpell = function(spellID, spellbookType)
-	local spellName, spellRank = GetSpellName(spellID, spellbookType)
-	if MPOWA.auras[spellname] then
-		castByMe[spellName] = GT()
-	end
-	oldCastSpell(spellID, spellbookType)
-end
---]]
-
 
 function MPOWA:OnUpdate(elapsed)
 	LastUpdate = LastUpdate + elapsed
 	if LastUpdate >= UpdateTime then
-		for cat, val in self.NeedUpdate do
+		for cat, val in pairs(self.NeedUpdate) do
 			if val then
 				local path = MPOWA_SAVE[cat]
 				if not self.active[cat] and self:TernaryReturn(cat, "alive", self:Reverse(UnitIsDeadOrGhost("player"))) and self:TernaryReturn(cat, "mounted", self.mounted) and self:TernaryReturn(cat, "incombat", UnitAffectingCombat("player")) and self:TernaryReturn(cat, "inparty", self.party) and self:TernaryReturn(cat, "inraid", UnitInRaid("player")) and self:TernaryReturn(cat, "inbattleground", self.bg) and self:TernaryReturn(cat, "inraidinstance", self.instance) then
@@ -54,7 +38,7 @@ function MPOWA:OnUpdate(elapsed)
 						local duration = self:GetCooldown(path["buffname"]) or 0
 						if path["timer"] then
 							if duration > 0 then
-								if path["hundredth"] then -- check it
+								if path["hundredth"] then
 									self.frames[cat][3]:SetText(strform("%.2f", duration))
 								else
 									self.frames[cat][3]:SetText(flr(duration))
@@ -117,33 +101,17 @@ function MPOWA:OnUpdate(elapsed)
 				end
 			end
 		end
-		for cat, val in self.active do
+		for cat, val in pairs(self.active) do
 			if val then
 				local path = MPOWA_SAVE[cat]
-				local text, count = "", 0
-				if (path["unit"] or "player") == "player" then
-					count = GetPlayerBuffApplications(val)
+				local text, count, timeLeft = "", 0, 0, 0
+				if val[3] then
+					_, _, text, count, _, _, timeLeft  =  UnitDebuff(val[1], val[2]);
 				else
-					if path["isdebuff"] then
-						text, count = UnitDebuff(path["unit"], val)
-						if not self.lastCount[cat] or self.lastCount[cat]<count then
-							self.activeTimer[cat] = GT()
-						end
-						self.lastCount[cat] = count
-					else
-						text, count = UnitBuff(path["unit"], val)
-					end
+					_, _, text, count, _, timeLeft = UnitBuff(val[1], val[2]);
 				end
-				self:SetTexture(cat, text, val)
-				if count then
-					if self.pushed[cat] then
-						if count<=1 and self.pushed[cat]>1 then
-							count = self.pushed[cat];
-						end
-					end
-				end
+				self:SetTexture(cat, text)
 				if self:IsStacks(count or 0, cat, "stacks") then
-					local duration = self:GetDuration(val, cat)
 					if (count or 0)>1 and not path["hidestacks"] then
 						self.frames[cat][4]:SetText(count)
 						self.frames[cat][4]:Show()
@@ -151,23 +119,24 @@ function MPOWA:OnUpdate(elapsed)
 						self.frames[cat][4]:Hide()
 					end
 					-- Duration
+					timeLeft = timeLeft or 0
 					if path["timer"] then
-						if duration > 0 then
+						if timeLeft > 0 then
 							if path["hundredth"] then -- check it
-								self.frames[cat][3]:SetText(strform("%.2f", duration))
+								self.frames[cat][3]:SetText(strform("%.2f", timeLeft))
 							else
-								self.frames[cat][3]:SetText(flr(duration))
+								self.frames[cat][3]:SetText(flr(timeLeft))
 							end
 						else
 							self.frames[cat][3]:Hide()
 						end
 					end
-					self:Flash(elapsed, cat, duration)
+					self:Flash(elapsed, cat, timeLeft)
 					if path["inverse"] then
 						self:FHide(cat)
 					else
 						if path["secsleft"] then
-							if duration<=path["secsleftdur"] then
+							if timeLeft<=path["secsleftdur"] then
 								self:FShow(cat)
 							else
 								self:FHide(cat)
@@ -189,37 +158,11 @@ function MPOWA:OnUpdate(elapsed)
 	end
 end
 
-function MPOWA:SetTexture(key, texture, index)
+function MPOWA:SetTexture(key, texture)
 	local p = MPOWA_SAVE[key]
 	if p["texture"] == "Interface\\AddOns\\ModifiedPowerAuras\\images\\dummy.tga" then
-		if texture and texture ~= "" then
-			p["texture"] = texture
-			self.frames[key][2]:SetTexture(texture)
-		else
-			local t = GetPlayerBuffTexture(index)
-			if t and t ~= "" then
-				p["texture"] = t
-				self.frames[key][2]:SetTexture(t)
-			end
-		end
-	end
-end
-
-function MPOWA:GetDuration(index, cat)
-	local path = MPOWA_SAVE[cat]
-	if not path["raidgroupmember"] then -- check this
-		if path["friendlytarget"] or path["enemytarget"] then
-			local time = GT()
-			self.activeTimer[cat] = self.activeTimer[cat] or GT()
-			if (self.activeTimer[cat]+path["targetduration"]-time)<0 then
-				self.activeTimer[cat] = time
-			end
-			return (self.activeTimer[cat]+path["targetduration"]-time)
-		else
-			return GetPlayerBuffTimeLeft(index) or 0
-		end
-	else
-		return 0
+		p["texture"] = texture
+		self.frames[key][2]:SetTexture(texture)
 	end
 end
 
@@ -228,7 +171,7 @@ function MPOWA:GetCooldown(buff)
 	local start, duration, enabled = GetSpellCooldown(self:GetSpellSlot(buff), "spell")
 	-- Get Inventory Cooldown
 	if start == 0 and duration == 0 then
-		for i=1, 18 do
+		for i=1, 22 do
 			start, duration, enable = GetInventoryItemCooldown("player", i)
 			local _,_,name = strfind(GetInventoryItemLink("player",i) or "","^.*%[(.*)%].*$")
 			if (name) then
@@ -238,12 +181,12 @@ function MPOWA:GetCooldown(buff)
 					else
 						return 0
 					end
-				elseif i == 18 and start == 0 and duration == 0 then
+				elseif i == 22 and start == 0 and duration == 0 then
 					-- Get Container Item Cooldown
 					for p=0, 4 do
 						for u=1, GetContainerNumSlots(p) do
 							start, duration, enable = GetContainerItemCooldown(p,u)
-							_,_,name=string.find(GetContainerItemLink(p,u) or "","^.*%[(.*)%].*$")
+							_,_,name=strfind(GetContainerItemLink(p,u) or "","^.*%[(.*)%].*$")
 							if (not name) then break end
 							if strfind(strlower(buff), strlower(name)) then
 								if duration>2 then
@@ -295,54 +238,27 @@ function MPOWA:Iterate(unit)
 		self:InInstance()
 	end
 	
-	for cat, val in self.active do
-		if (not MPOWA_SAVE[cat]["unit"] and unit=="player") or (MPOWA_SAVE[cat]["unit"]==unit) then
-			self.pushed[cat] = false;
-		end
-	end
-	
 	if self.Windfury then
 		self:Push("Windfury", "player", 42, false, "Windfury")
 		self:Push("Windfury Totem", "player", 43, false, "Windfury Totem")
 	end
 	
 	for i=1, 40 do
-		local p = i
-		local debuff
-		MPowa_Tooltip:SetOwner(UIParent, "ANCHOR_NONE")
-		MPowa_Tooltip:ClearLines()
-		if unit == "player" then
-			p = GetPlayerBuff(i-1, "HELPFUL")
-			MPowa_Tooltip:SetPlayerBuff(p)
-		else
-			MPowa_Tooltip:SetUnitBuff(unit, i)
-		end
-		local buff = MPowa_TooltipTextLeft1:GetText()
-		self:Push(buff, unit, p, false)
-		
+		local buff, debuff
+		buff = UnitBuff(unit, i)
+		self:Push(buff, unit, i, false)
 		if i<17 then
-			MPowa_Tooltip:ClearLines()
-			p = i
-			if unit == "player" then
-				p = GetPlayerBuff(i-1, "HARMFUL")
-				MPowa_Tooltip:SetPlayerBuff(p)
-			else
-				MPowa_Tooltip:SetUnitDebuff(unit, i)
-			end
-			debuff = MPowa_TooltipTextLeft1:GetText()
-			self:Push(debuff, unit, p, true)
+			debuff = UnitDebuff(unit, i)
+			self:Push(debuff, unit, i, true)
 		end
-		MPowa_Tooltip:Hide()
 		if not buff and not debuff then break end
 	end
-	for cat, val in self.active do
+	for cat, val in pairs(self.active) do
 		if val then
 			if not BuffExist[cat] then
-				self.activeTimer[val] = nil
 				local p = MPOWA_SAVE[cat]
 				if ((p["friendlytarget"] or p["enemytarget"]) and unit=="target") or (not p["raidgroupmember"] and not p["friendlytarget"] and not p["enemytarget"] and unit=="player") or p["raidgroupmember"] then
 					self.active[cat] = false
-					self.lastCount[cat] = 0
 					self.frames[cat][3]:Hide()
 					if not p["inverse"] and not p["cooldown"] then
 						if p["useendsound"] then
@@ -363,15 +279,15 @@ end
 
 function MPOWA:Push(aura, unit, i, isdebuff)
 	if self.auras[aura] then
-		for cat, val in self.auras[aura] do
+		for cat, val in pairs(self.auras[aura]) do
 			local path = MPOWA_SAVE[val]
 			local bypass = self.active[val]
 			local tex = ""
 			if path["secondspecifier"] then
 				if path["isdebuff"] then
-					tex = UnitDebuff(unit, i)
+					_,_,tex = UnitDebuff(unit, i)
 				else
-					tex = UnitBuff(unit, i)
+					_,_,tex = UnitBuff(unit, i)
 				end
 				tex = strlower(strsub(tex, strfind(tex, "Icons")+6))
 			end
@@ -379,18 +295,13 @@ function MPOWA:Push(aura, unit, i, isdebuff)
 				if self:TernaryReturn(val, "alive", self:Reverse(UnitIsDeadOrGhost("player"))) and self:TernaryReturn(val, "mounted", self.mounted) and self:TernaryReturn(val, "incombat", UnitAffectingCombat("player")) and self:TernaryReturn(val, "inparty", self.party) and self:TernaryReturn(val, "inraid", UnitInRaid("player")) and self:TernaryReturn(val, "inbattleground", self.bg) and self:TernaryReturn(val, "inraidinstance", self.instance) and not path["cooldown"] and self:IsStacks(GetComboPoints("player", "target"), val, "cpstacks") then
 					BuffExist[val] = true
 					if path["enemytarget"] and unit == "target" then
-						self.active[val] = i
+						self.active[val] = {unit, i, isdebuff}
 					elseif path["friendlytarget"] and unit == "target" then
-						self.active[val] = i
+						self.active[val] = {unit, i, isdebuff}
 					elseif path["raidgroupmember"] then -- have to check those vars
-						self.active[val] = i
+						self.active[val] = {unit, i, isdebuff}
 					elseif not path["enemytarget"] and not path["friendlytarget"] and not path["raidgroupmember"] and unit == "player" then
-						self.active[val] = i
-					end
-					if self.pushed[val] then
-						self.pushed[val] = self.pushed[val] + 1;
-					else
-						self.pushed[val] = 1;
+						self.active[val] = {unit, i, isdebuff}
 					end
 					if self.active[val] and not bypass then
 						if tnbr(self.frames[val][1]:GetAlpha())<=0.1 then
@@ -404,7 +315,6 @@ function MPOWA:Push(aura, unit, i, isdebuff)
 							end
 						end
 						if not path["secsleft"] then
-							self.activeTimer[val] = GT()
 							self:FShow(val)
 						end
 						if path["timer"] then
@@ -420,7 +330,7 @@ end
 function MPOWA:IsStacks(count, id, kind)
 	if MPOWA_SAVE[id][kind] ~= "" then
 		local con = strsub(MPOWA_SAVE[id][kind], 1, 2)
-		local amount = tonumber(strsub(MPOWA_SAVE[id][kind], 3))
+		local amount = tnbr(strsub(MPOWA_SAVE[id][kind], 3))
 		if amount ~= nil and con ~= nil then
 			if con == ">=" and count >= amount then
 				return true
@@ -429,7 +339,7 @@ function MPOWA:IsStacks(count, id, kind)
 			end
 		end
 		con = strsub(MPOWA_SAVE[id][kind], 1, 1)
-		amount = tonumber(strsub(MPOWA_SAVE[id][kind], 2))
+		amount = tnbr(strsub(MPOWA_SAVE[id][kind], 2))
 		if amount ~= nil and con ~= nil then
 			if con == "<" and count < amount then
 				return true
@@ -443,8 +353,8 @@ function MPOWA:IsStacks(count, id, kind)
 		end
 		con = strfind(MPOWA_SAVE[id][kind], "-")
 		if con then
-			local amount1 = tonumber(strsub(MPOWA_SAVE[id][kind], 1, con-1))
-			local amount2 = tonumber(strsub(MPOWA_SAVE[id][kind], con+1))
+			local amount1 = tnbr(strsub(MPOWA_SAVE[id][kind], 1, con-1))
+			local amount2 = tnbr(strsub(MPOWA_SAVE[id][kind], con+1))
 			if con and amount1 and amount2 and ((count >= amount1 and count <= amount2) or (count >= amount2 and count <= amount1)) then
 				return true
 			end

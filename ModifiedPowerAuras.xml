@@ -1129,10 +1129,7 @@
 									<OnClick>
 										MPOWA:Checkbutton("enemytarget")
 										if MPowa_ConfigFrame_Container_1_2_Checkbutton_EnemyTarget:GetChecked() or MPowa_ConfigFrame_Container_1_2_Checkbutton_FriendlyTarget:GetChecked() then
-											MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration:Show()
 											MPOWA_SAVE[MPOWA.CurEdit]["unit"] = "target"
-										else
-											MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration:Hide()
 										end
 									</OnClick>
 								</Scripts>

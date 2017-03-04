@@ -9,6 +9,9 @@ local strgfind = string.gfind
 local strfind = string.find
 local GT = GetTime
 local tnbr = tonumber
+local GetNumRaidMembers = GetNumRaidMembers
+local GetNumPartyMembers = GetNumPartyMembers
+local ceil = ceil
 
 function MPOWA:Reverse(bool)
 	return not bool
@@ -36,7 +39,7 @@ function MPOWA:GetGroup()
 end
 
 function MPOWA:GetTablePosition(tab, value)
-	for cat, val in tab do
+	for cat, val in pairs(tab) do
 		if val == value then
 			return cat
 		end
@@ -45,11 +48,11 @@ function MPOWA:GetTablePosition(tab, value)
 end
 
 function MPOWA:GetMaxValues(val)
-	val = tonumber(val)
+	val = tnbr(val)
 	return ceil(val)+50
 end
 
 function MPOWA:GetMinValues(val)
-	val = tonumber(val)
+	val = tnbr(val)
 	return ceil(val)-50
 end
