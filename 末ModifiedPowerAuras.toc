@@ -9,8 +9,6 @@
 ## SavedVariables: MPOWA_PROFILE
 ## SavedVariablesPerCharacter: MPOWA_SAVE
 
-libs\AceLibrary\AceLibrary.lua
-libs\TipHooker-1.0\TipHooker-1.0.lua
 libs\LibStub\LibStub.lua
 libs\Classy-1.0\Classy-1.0.lua
 libs\Sol\Sol.lua
