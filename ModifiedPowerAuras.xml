@@ -200,7 +200,7 @@
 				</Texture>
 			</Layer>
 			<Layer level="ARTWORK">
-				<Texture name="$parent_Icon" file="Interface\AddOns\ModifiedPowerAuras\images\dummy">
+				<Texture name="$parent_Icon" file="Interface\AddOns\末ModifiedPowerAuras\images\dummy">
 					<Size x="32" y="32" />
 					<Anchors>
 						<Anchor point="TOPLEFT" />
@@ -457,7 +457,7 @@
 				</Anchors>
 				<Layers>
 					<Layer>
-						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\ButtonContainer.tga">
+						<Texture file="Interface\AddOns\末ModifiedPowerAuras\images\ButtonContainer.tga">
 							<Size x="300" y="300" />
 							<Anchors>
 								<Anchor point="CENTER" />
@@ -557,7 +557,7 @@
 								</Anchors>
 								<Layers>
 									<Layer level="BACKGROUND">
-										<Texture name="$parent_Texture" file="Interface\AddOns\ModifiedPowerAuras\images\dummy.tga">
+										<Texture name="$parent_Texture" file="Interface\AddOns\末ModifiedPowerAuras\images\dummy.tga">
 											<Size x="80" y="80" />
 										</Texture>
 									</Layer>
@@ -2683,7 +2683,7 @@
 				</Anchors>
 				<Layers>
 					<Layer>
-						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\ButtonContainer.tga">
+						<Texture file="Interface\AddOns\末ModifiedPowerAuras\images\ButtonContainer.tga">
 							<Size x="300" y="300" />
 							<Anchors>
 								<Anchor point="CENTER" />
@@ -2700,7 +2700,7 @@
 				</Anchors>
 				<Layers>
 					<Layer>
-						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\warrior">
+						<Texture file="Interface\AddOns\末ModifiedPowerAuras\images\warrior">
 							<Size x="18" y="18" />
 							<Anchors>
 								<Anchor point="BOTTOM" />
@@ -2744,7 +2744,7 @@
 				</Anchors>
 				<Layers>
 					<Layer>
-						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\rogue">
+						<Texture file="Interface\AddOns\末ModifiedPowerAuras\images\rogue">
 							<Size x="18" y="18" />
 							<Anchors>
 								<Anchor point="BOTTOM" />
@@ -2788,7 +2788,7 @@
 				</Anchors>
 				<Layers>
 					<Layer>
-						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\priest">
+						<Texture file="Interface\AddOns\末ModifiedPowerAuras\images\priest">
 							<Size x="18" y="18" />
 							<Anchors>
 								<Anchor point="BOTTOM" />
@@ -2832,7 +2832,7 @@
 				</Anchors>
 				<Layers>
 					<Layer>
-						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\hunter">
+						<Texture file="Interface\AddOns\末ModifiedPowerAuras\images\hunter">
 							<Size x="18" y="18" />
 							<Anchors>
 								<Anchor point="BOTTOM" />
@@ -2876,7 +2876,7 @@
 				</Anchors>
 				<Layers>
 					<Layer>
-						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\druid">
+						<Texture file="Interface\AddOns\末ModifiedPowerAuras\images\druid">
 							<Size x="18" y="18" />
 							<Anchors>
 								<Anchor point="BOTTOM" />
@@ -2920,7 +2920,7 @@
 				</Anchors>
 				<Layers>
 					<Layer>
-						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\mage">
+						<Texture file="Interface\AddOns\末ModifiedPowerAuras\images\mage">
 							<Size x="18" y="18" />
 							<Anchors>
 								<Anchor point="BOTTOM" />
@@ -2964,7 +2964,7 @@
 				</Anchors>
 				<Layers>
 					<Layer>
-						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\warlock">
+						<Texture file="Interface\AddOns\末ModifiedPowerAuras\images\warlock">
 							<Size x="18" y="18" />
 							<Anchors>
 								<Anchor point="BOTTOM" />
@@ -3008,7 +3008,7 @@
 				</Anchors>
 				<Layers>
 					<Layer>
-						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\paladin">
+						<Texture file="Interface\AddOns\末ModifiedPowerAuras\images\paladin">
 							<Size x="18" y="18" />
 							<Anchors>
 								<Anchor point="BOTTOM" />
@@ -3052,7 +3052,7 @@
 				</Anchors>
 				<Layers>
 					<Layer>
-						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\shaman">
+						<Texture file="Interface\AddOns\末ModifiedPowerAuras\images\shaman">
 							<Size x="18" y="18" />
 							<Anchors>
 								<Anchor point="BOTTOM" />
@@ -3096,7 +3096,7 @@
 				</Anchors>
 				<Layers>
 					<Layer>
-						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\hearthstone">
+						<Texture file="Interface\AddOns\末ModifiedPowerAuras\images\hearthstone">
 							<Size x="18" y="18" />
 							<Anchors>
 								<Anchor point="BOTTOM" />
@@ -3140,7 +3140,7 @@
 				</Anchors>
 				<Layers>
 					<Layer>
-						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\hearthstone">
+						<Texture file="Interface\AddOns\末ModifiedPowerAuras\images\hearthstone">
 							<Size x="18" y="18" />
 							<Anchors>
 								<Anchor point="BOTTOM" />
@@ -3184,7 +3184,7 @@
 				</Anchors>
 				<Layers>
 					<Layer>
-						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\hearthstone">
+						<Texture file="Interface\AddOns\末ModifiedPowerAuras\images\hearthstone">
 							<Size x="18" y="18" />
 							<Anchors>
 								<Anchor point="BOTTOM" />
@@ -3228,7 +3228,7 @@
 				</Anchors>
 				<Layers>
 					<Layer>
-						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\hearthstone">
+						<Texture file="Interface\AddOns\末ModifiedPowerAuras\images\hearthstone">
 							<Size x="18" y="18" />
 							<Anchors>
 								<Anchor point="BOTTOM" />
@@ -3272,7 +3272,7 @@
 				</Anchors>
 				<Layers>
 					<Layer>
-						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\hearthstone">
+						<Texture file="Interface\AddOns\末ModifiedPowerAuras\images\hearthstone">
 							<Size x="18" y="18" />
 							<Anchors>
 								<Anchor point="BOTTOM" />
@@ -3316,7 +3316,7 @@
 				</Anchors>
 				<Layers>
 					<Layer>
-						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\hearthstone">
+						<Texture file="Interface\AddOns\末ModifiedPowerAuras\images\hearthstone">
 							<Size x="18" y="18" />
 							<Anchors>
 								<Anchor point="BOTTOM" />
@@ -3360,7 +3360,7 @@
 				</Anchors>
 				<Layers>
 					<Layer>
-						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\hearthstone">
+						<Texture file="Interface\AddOns\末ModifiedPowerAuras\images\hearthstone">
 							<Size x="18" y="18" />
 							<Anchors>
 								<Anchor point="BOTTOM" />

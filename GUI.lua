@@ -12,7 +12,7 @@ local tnbr = tonumber
 
 local SELECTEDICON = "Interface\\Icons\\Ability_Warrior_BattleShout"
 local icopath = "Interface\\Icons\\"
-local locpath = "Interface\\AddOns\\ModifiedPowerAuras\\Auras\\"
+local locpath = "Interface\\AddOns\\末ModifiedPowerAuras\\Auras\\"
 
 local icons = {
 	["warrior"] = {
@@ -830,7 +830,7 @@ function MPOWA:SoundSliderChange(obj, var)
 		if MPOWA_SAVE[self.CurEdit][var] < 16 then
 			PlaySound(self.SOUND[MPOWA_SAVE[self.CurEdit][var]], "master")
 		else
-			PlaySoundFile("Interface\\AddOns\\ModifiedPowerAuras\\Sounds\\"..self.SOUND[MPOWA_SAVE[self.CurEdit][var]], "master")
+			PlaySoundFile("Interface\\AddOns\\末ModifiedPowerAuras\\Sounds\\"..self.SOUND[MPOWA_SAVE[self.CurEdit][var]], "master")
 		end
 	end
 end
@@ -979,7 +979,7 @@ end
 function MPOWA:Editbox_ICONPATH(obj)
 	if obj:GetText() == "" then
 		if MPOWA_SAVE[self.CurEdit].texture == "" then
-			MPOWA_SAVE[self.CurEdit].texture = "Interface\\AddOns\\ModifiedPowerAuras\\images\\dummy.tga"
+			MPOWA_SAVE[self.CurEdit].texture = "Interface\\AddOns\\末ModifiedPowerAuras\\images\\dummy.tga"
 		end
 		obj:SetText(MPOWA_SAVE[self.CurEdit].texture)
 	end
@@ -990,7 +990,7 @@ function MPOWA:Editbox_Name(obj)
 	MPOWA_SAVE[self.CurEdit].buffname = obj:GetText()
 
 	if oldname ~= MPOWA_SAVE[self.CurEdit].buffname then
-		MPOWA_SAVE[self.CurEdit].texture = "Interface\\AddOns\\ModifiedPowerAuras\\images\\dummy.tga"
+		MPOWA_SAVE[self.CurEdit].texture = "Interface\\AddOns\\末ModifiedPowerAuras\\images\\dummy.tga"
 		MPowa_ConfigFrame_Container_1_Icon_Texture:SetTexture(MPOWA_SAVE[self.CurEdit].texture)
 		_G("ConfigButton"..self.CurEdit.."_Icon"):SetTexture(MPOWA_SAVE[self.CurEdit].texture)
 		_G("TextureFrame"..self.CurEdit.."_Icon"):SetTexture(MPOWA_SAVE[self.CurEdit].texture)
@@ -1018,7 +1018,7 @@ function MPOWA:Editbox_SecondSpecifier(obj)
 	MPOWA_SAVE[self.CurEdit].secondspecifiertext = obj:GetText()
 
 	if oldname ~= MPOWA_SAVE[self.CurEdit].secondspecifiertext then
-		MPOWA_SAVE[self.CurEdit].texture = "Interface\\AddOns\\ModifiedPowerAuras\\images\\dummy.tga"
+		MPOWA_SAVE[self.CurEdit].texture = "Interface\\AddOns\\末ModifiedPowerAuras\\images\\dummy.tga"
 		MPowa_ConfigFrame_Container_1_Icon_Texture:SetTexture(MPOWA_SAVE[self.CurEdit].texture)
 		_G("ConfigButton"..self.CurEdit.."_Icon"):SetTexture(MPOWA_SAVE[self.CurEdit].texture)
 		_G("TextureFrame"..self.CurEdit.."_Icon"):SetTexture(MPOWA_SAVE[self.CurEdit].texture)

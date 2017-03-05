@@ -2,7 +2,7 @@
 
 function MPOWA:CreateSave(i)
 	MPOWA_SAVE[i] = {
-		texture = "Interface\\AddOns\\ModifiedPowerAuras\\images\\dummy.tga",
+		texture = "Interface\\AddOns\\末ModifiedPowerAuras\\images\\dummy.tga",
 		alpha = 1,
 		size = 0.75,
 		x = 0,
