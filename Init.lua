@@ -4,7 +4,7 @@ MPOWA.Cloaded = false
 MPOWA.loaded = false
 MPOWA.selected = 1
 MPOWA.CurEdit = 1
-MPOWA.Page = 1
+MPOWA.Page = 1 
 
 MPOWA.frames = {}
 MPOWA.auras = {}
