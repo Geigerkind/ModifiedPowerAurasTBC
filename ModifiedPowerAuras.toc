@@ -8,8 +8,9 @@
 ## Author: Shino <Synced> - Kronos
 ## SavedVariables: MPOWA_PROFILE
 ## SavedVariablesPerCharacter: MPOWA_SAVE
-## Version: 1
 
+libs\AceLibrary\AceLibrary.lua
+libs\TipHooker-1.0\TipHooker-1.0.lua
 libs\LibStub\LibStub.lua
 libs\Classy-1.0\Classy-1.0.lua
 libs\Sol\Sol.lua

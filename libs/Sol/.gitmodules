@@ -1,3 +1,0 @@
-[submodule "libs/LibStub"]
-	path = libs/LibStub
-	url = https://github.com/martinjlowm/LibStub.git

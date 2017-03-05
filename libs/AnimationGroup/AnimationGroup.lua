@@ -49,8 +49,8 @@ local function CreateAnimationGroup(self, name, inherits_from)
 end
 
 local _CreateFrame = CreateFrame
-function CreateFrame(a,b,c,d)
-    local frame = _CreateFrame(a,b,c,d)
+function CreateFrame(frameType, name, parent, inheritFrame)
+    local frame = _CreateFrame(frameType, name, parent, inheritFrame)
 
     frame.CreateAnimationGroup = CreateAnimationGroup
 

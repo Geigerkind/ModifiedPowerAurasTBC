@@ -1,3 +1,6 @@
+-- Adding line to prevent double loading
+if BuffLibDB or BuffLibDebug then return end
+
 BuffLibDebug = 0
 BuffLibDB = BuffLibDB or { sync = true}
 local function log(msg)

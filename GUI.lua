@@ -372,7 +372,8 @@ function MPOWA:FillButtonContainer(key)
 		end
 		_G("MPowa_IconFrame_ButtonContainer_Button"..i.."_Icon"):SetTexture(cat)
 		button:ClearAllPoints()
-		button:SetPoint("TOPLEFT", MPowa_IconFrame_ButtonContainer, "TOPLEFT", 6+mod(i, 7)*42, -11-floor(i/7)*42)
+		button:SetPoint("TOPLEFT", MPowa_IconFrame_ButtonContainer, "TOPLEFT", 6+mod(i, 7)*42, -11-floor(i/7)*41)
+		button:Show()
 		i = i + 1
 	end
 end
