@@ -23,7 +23,7 @@ Modified Power Auras is the advanced version of the AddOn Power Auras. It is a l
 ### Installing Instructions ###
 
 * Download the AddOn [here](https://github.com/Geigerkind/ModifiedPowerAurasTBC/releases)
-* Rename the unziped folder to "末ModifiedPowerAuras"
+* Rename the unziped folder to "zzzModifiedPowerAuras"
 * Place the folder into your AddOn directory in your World of Warcraft folder
 * Start the game
 * Type in **/mpowa** to open the configuration frame

@@ -160,7 +160,7 @@ end
 
 function MPOWA:SetTexture(key, texture)
 	local p = MPOWA_SAVE[key]
-	if p["texture"] == "Interface\\AddOns\\末ModifiedPowerAuras\\images\\dummy.tga" then
+	if p["texture"] == "Interface\\AddOns\\zzzModifiedPowerAuras\\images\\dummy.tga" then
 		p["texture"] = texture
 		self.frames[key][2]:SetTexture(texture)
 	end
@@ -260,7 +260,7 @@ function MPOWA:Iterate(unit)
 							if p.endsound < 16 then
 								PlaySound(self.SOUND[p.endsound], "master")
 							else
-								PlaySoundFile("Interface\\AddOns\\末ModifiedPowerAuras\\Sounds\\"..self.SOUND[p.endsound], "master")
+								PlaySoundFile("Interface\\AddOns\\zzzModifiedPowerAuras\\Sounds\\"..self.SOUND[p.endsound], "master")
 							end
 						end
 						self.frames[cat][1]:SetAlpha(p["alpha"])
@@ -306,7 +306,7 @@ function MPOWA:Push(aura, unit, i, isdebuff, castbyme)
 							if path.beginsound < 16 then
 								PlaySound(self.SOUND[path.beginsound], "master")
 							else
-								PlaySoundFile("Interface\\AddOns\\末ModifiedPowerAuras\\Sounds\\"..self.SOUND[path.beginsound], "master")
+								PlaySoundFile("Interface\\AddOns\\zzzModifiedPowerAuras\\Sounds\\"..self.SOUND[path.beginsound], "master")
 							end
 						end
 						if not path["secsleft"] then
