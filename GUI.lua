@@ -949,11 +949,13 @@ function MPOWA:OptionsFrame_CancelColor()
 end
 
 function MPOWA:Editbox_GroupNumber(obj)
-	if tonumber(obj:GetText()) ~= nil then
+	if obj:GetText() then
 		MPOWA_SAVE[self.CurEdit]["groupnumber"] = tnbr(obj:GetText())
-		MPOWA:ApplyConfig(self.CurEdit)
-		self:Iterate("player")
+	else
+		MPOWA_SAVE[self.CurEdit]["groupnumber"] = ""
 	end
+	MPOWA:ApplyConfig(self.CurEdit)
+	self:Iterate("player")
 end
 
 function MPOWA:Editbox_Duration(obj)
