@@ -496,7 +496,7 @@ function MPOWA:ApplyDynamicGroup(i)
 		end
 		local inc = 0
 		for cat, va in pairs(MPOWA_SAVE) do
-			if self.frames[cat] and (tnbr(va["groupnumber"])==i or cat==i) and (self.active[cat] or va["test"] or self.testAll) then
+			if self.frames[cat] and (tnbr(va["groupnumber"])==i or cat==i) and (self.active[cat] or self.NeedUpdate[cat] or va["test"] or self.testAll) then
 				self.frames[cat][1]:ClearAllPoints()
 				self.frames[cat][1]:SetPoint("TOPLEFT", self.frames[i][5], "TOPRIGHT", inc*70, 0)
 				inc = inc + 1;
@@ -510,7 +510,7 @@ function MPOWA:ApplyDynamicGroup(i)
 end
 
 function MPOWA:ApplyAttributesToButton(i, button)
-	if not button then return end
+	if not button and not MPOWA_SAVE[i] then return end
 	local coeff = (self.Page - 1)*49
 	local p = (i-coeff)
 	local bool = false
@@ -518,10 +518,11 @@ function MPOWA:ApplyAttributesToButton(i, button)
 		p = i
 		bool = true
 	end
+	if not _G("ConfigButton"..p.."_Icon") then return end
 	button:ClearAllPoints()
 	button:SetPoint("TOPLEFT",MPowa_ButtonContainer,"TOPLEFT",42*(p-1)+6 - floor((p-1)/7)*7*42,-11-floor((p-1)/7)*41)
 	button:SetID(i)
-	_G("ConfigButton"..p.."_Icon"):SetTexture(MPOWA_SAVE[i]["texture"])
+	_G("ConfigButton"..p.."_Icon"):SetTexture(MPOWA_SAVE[i]["texture"] or "Interface\\AddOns\\zzzModifiedPowerAuras\\images\\dummy.tga")
 	_G("ConfigButton"..p.."_Count"):SetText(i)
 	_G("ConfigButton"..p.."_Border"):Hide()
 	if not bool and i<=self.Page*49 then
@@ -576,7 +577,7 @@ function MPOWA:Remove()
 		if (self.selected+coeff) == self.CurEdit then
 			MPowa_ConfigFrame:Hide()
 		end
-		MPOWA_SAVE[self.selected+coeff]["used"] = false
+		if not MPOWA_SAVE[self.selected+coeff] or not MPOWA_SAVE[self.selected+coeff]["used"] then return end
 		self.NeedUpdate[self.selected+coeff] = false
 		if self.auras[MPOWA_SAVE[self.selected+coeff]["buffname"]] then
 			if self:GetTableLength(self.auras[MPOWA_SAVE[self.selected+coeff]["buffname"]])>1 and self:GetTablePosition(self.auras[MPOWA_SAVE[self.selected+coeff]["buffname"]], self.selected+coeff) then
@@ -593,6 +594,7 @@ function MPOWA:Remove()
 			end
 		end
 		self:CreateSave(self.selected+coeff)
+		MPOWA_SAVE[self.selected+coeff]["used"] = false
 		self.auras[MPOWA_SAVE[self.selected+coeff]["buffname"]] = false
 		self.frames[self.selected+coeff][1]:Hide()
 		self.selected = self.NumBuffs-coeff

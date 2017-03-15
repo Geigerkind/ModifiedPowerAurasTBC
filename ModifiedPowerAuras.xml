@@ -46,20 +46,32 @@
 					this:StopMovingOrSizing()
 					local index = GetCurrentResolution()
 					local res = ({GetScreenResolutions()})[index]
-					for xc,yc in string.gfind(res, "(%d+)x(%d+)") do
+					local xc, yc = res:match("(%d+)x(%d+)")
+					if xc and yc then
 						local a,b,c,x,y = this:GetPoint(0)
 						local scale = (0.7-this:GetScale())*(0.925-(0.64-UIParent:GetEffectiveScale()))
-						x = ceil(x-(xc/((UIParent:GetEffectiveScale()-scale)*2)))
-						y = ceil(y+(yc/((UIParent:GetEffectiveScale()-scale)*2)))
+						scale = (UIParent:GetEffectiveScale()-scale)
+						if a == "BOTTOM" then
+							y = -((yc/2)*(1/scale)-(y))
+						end
+						if a == "TOP" then
+							y = ((yc/2)*(1/scale)+(y))
+						end
+						if a == "LEFT" then
+							x = -((xc/2)*(1/scale)-(x))
+						end
+						if a == "RIGHT" then
+							x = ((xc/2)*(1/scale)+(x))
+						end
 						MPowa_ConfigFrame_Container_1_Slider_PosX:SetMinMaxValues(MPOWA:GetMinValues(x),MPOWA:GetMaxValues(x))
 						MPowa_ConfigFrame_Container_1_Slider_PosX:SetValue(x)
-						MPowa_ConfigFrame_Container_1_Slider_PosXText:SetText(MPOWA_SLIDER_POSX.." "..x)
+						MPowa_ConfigFrame_Container_1_Slider_PosXText:SetText(MPOWA_SLIDER_POSX.." "..ceil(x))
 						MPowa_ConfigFrame_Container_1_Slider_PosXLow:SetText(MPOWA:GetMinValues(x))
 						MPowa_ConfigFrame_Container_1_Slider_PosXHigh:SetText(MPOWA:GetMaxValues(x))
 						
 						MPowa_ConfigFrame_Container_1_Slider_PosY:SetMinMaxValues(MPOWA:GetMinValues(y),MPOWA:GetMaxValues(y))
 						MPowa_ConfigFrame_Container_1_Slider_PosY:SetValue(y)
-						MPowa_ConfigFrame_Container_1_Slider_PosYText:SetText(MPOWA_SLIDER_POSY.." "..y)
+						MPowa_ConfigFrame_Container_1_Slider_PosYText:SetText(MPOWA_SLIDER_POSY.." "..ceil(y))
 						MPowa_ConfigFrame_Container_1_Slider_PosYLow:SetText(MPOWA:GetMinValues(y))
 						MPowa_ConfigFrame_Container_1_Slider_PosYHigh:SetText(MPOWA:GetMaxValues(y))
 					end
