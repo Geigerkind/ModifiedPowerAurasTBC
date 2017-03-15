@@ -114,7 +114,7 @@ function MPOWA:OnEvent(event, arg1)
 		self:Iterate("target")
 	elseif event == "RAID_ROSTER_UPDATE" or event == "PARTY_MEMBERS_CHANGED" then
 		self:GetGroup()
-	elseif event == "PLAYER_AURAS_CHANGED" then
+	elseif event == "PLAYER_AURAS_CHANGED" or event == "PLAYER_REGEN_DISABLED" or event == "PLAYER_REGEN_ENABLED" then
 		self:Iterate("player")
 	else
 		self:Init()
