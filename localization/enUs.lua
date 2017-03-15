@@ -155,3 +155,15 @@ MPOWA_EDITBOX_TOOLTIP_ICONPATH = "Icon path. Enter the path here if it is not in
 
 MPOWA_CHECKBUTTON_MINE_TOOLTIP = "Indicates if it was cast by you. (Using BuffLib of Schaka)"
 MPOWA_CHECKBUTTON_MINE = "Mine"
+
+MPOWA_CHECKBUTTON_SORTED = "Sort by time"
+MPOWA_CHECKBUTTON_SORTED_TOOLTIP = "Sorts the auras in the group ascendent by time."
+
+MPOWA_SLIDER_DYNAMICORIENTATION = "Orientation: "
+MPOWA_SLIDER_DYNAMICORIENTATION_TOOLTIP = "Select the orientation how the group growths."
+
+MPOWA_CHECKBUTTON_DYCNTER = "No centering"
+MPOWA_CHECKBUTTON_DYCNTER_TOOLTIP = "Do not automatically change the offset of the group to center it."
+
+MPOWA_SLIDER_FONT = "Font: "
+MPOWA_SLIDER_FONT_TOOLTIP = "Slide to change to font of your timer."

@@ -154,4 +154,16 @@ if (GetLocale() == "deDE") then
 
 	MPOWA_CHECKBUTTON_MINE_TOOLTIP = "Von dir gezaubert. (Nutzt die BuffLib von Schaka)"
 	MPOWA_CHECKBUTTON_MINE = "Meins"
+
+	MPOWA_CHECKBUTTON_SORTED = "Sortiere nach Zeit"
+	MPOWA_CHECKBUTTON_SORTED_TOOLTIP = "Sortiert die Auren nach Zeit verbleibend (Aufsteigend)."
+
+	MPOWA_SLIDER_DYNAMICORIENTATION = "Ausrichtung: "
+	MPOWA_SLIDER_DYNAMICORIENTATION_TOOLTIP = "Wähle die Wachstumsrichtung."
+
+	MPOWA_CHECKBUTTON_DYCNTER = "Keine Zentrierung"
+	MPOWA_CHECKBUTTON_DYCNTER_TOOLTIP = "Lasse die Gruppe nicht automatisch ihrerer Mitte zu wachsen und schrumpfen."
+
+	MPOWA_SLIDER_FONT = "Scriftart: "
+	MPOWA_SLIDER_FONT_TOOLTIP = "Verschiebe das, um die Schriftart zu ändern."
 end

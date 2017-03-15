@@ -1695,6 +1695,36 @@
 								</Scripts>
 								<NormalTexture name="$parentNormalTexture" file="Interface\ChatFrame\ChatFrameColorSwatch" />
 							</Button>
+							<Slider name="$parent_Slider_Font" inherits="MPowa_SliderTemplate">
+								<Size x="130" y="16" />
+								<Anchors>
+									<Anchor point="TOP" relativeTo="$parent_Checkbutton_FlashAnim" relativePoint="BOTTOM">
+										<Offset x="55" y="-15" />
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.valuetext = {"Default", "ARIALN", "MORPHEUS", "Visitor2", "Accidental Presidency", "Enigma2", "VeraSe", "AlteHaas", "CaviarDreams", "ExpressWay", "ExpressWayBold", "Roboto", "The Bad Times", "Vegur"}
+										this.aide = MPOWA_SLIDER_FONT_TOOLTIP
+										this:SetMinMaxValues(1,14)
+										this:SetValue(1)
+										this:SetValueStep(1)
+										getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_FONT)
+										getglobal(this:GetName().."Low"):SetText("1")
+										getglobal(this:GetName().."High"):SetText("14")
+									</OnLoad>
+									<OnValueChanged>
+										if MPOWA.loaded and this:GetValue() then
+											local value = tonumber(this:GetValue())
+											if value > 0 then
+												getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_FONT..this.valuetext[value])
+												MPOWA_SAVE[MPOWA.CurEdit]["timerfont"] = value
+												MPOWA:ApplyConfig(MPOWA.CurEdit)
+											end
+										end
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
 						</Frames>
 					</Frame>
 					<Frame name="$parent_3" hidden="true" inherits="MPowa_ContainerTemplate">
@@ -2285,7 +2315,7 @@
 						</Scripts>
 					</Frame>
 					<Frame name="$parent_6" inherits="MPowa_ContainerTemplate" hidden="true">
-						<Size x="290" y="45" />
+						<Size x="290" y="120" />
 						<Frames>
 							<CheckButton name="$parent_IsDynamicGroup" inherits="MPowa_CheckTemplate">
 								<Anchors>
@@ -2348,6 +2378,70 @@
 									</Layer>
 								</Layers>
 							</EditBox>
+							<CheckButton name="$parent_Sorted" inherits="MPowa_CheckTemplate">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+										<Offset x="10" y="-42" />
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = MPOWA_CHECKBUTTON_SORTED_TOOLTIP
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_SORTED)
+									</OnLoad>
+									<OnClick>
+										MPOWA:Checkbutton("dynamicsorted")
+										MPOWA:ApplyConfig(MPOWA.CurEdit)
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<CheckButton name="$parent_TrunToCenter" inherits="MPowa_CheckTemplate">
+								<Anchors>
+									<Anchor point="LEFT" relativeTo="$parent_Sorted" relativePoint="RIGHT">
+										<Offset x="110" y="0" />
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = MPOWA_CHECKBUTTON_DYCNTER_TOOLTIP
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_DYCNTER)
+									</OnLoad>
+									<OnClick>
+										MPOWA:Checkbutton("dynamiccenter")
+										MPOWA:ApplyConfig(MPOWA.CurEdit)
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<Slider name="$parent_Slider_Orientation" inherits="MPowa_SliderTemplate">
+								<Size x="130" y="16" />
+								<Anchors>
+									<Anchor point="TOP" relativeTo="$parent_Sorted" relativePoint="BOTTOM">
+										<Offset x="55" y="-15" />
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.valuetext = {"Left", "Right", "Top", "Bottom"}
+										this.aide = MPOWA_SLIDER_TRANSLATE_TOOLTIP
+										this:SetMinMaxValues(1,4)
+										this:SetValue(1)
+										this:SetValueStep(1)
+										getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_DYNAMICORIENTATION)
+										getglobal(this:GetName().."Low"):SetText("1")
+										getglobal(this:GetName().."High"):SetText("4")
+									</OnLoad>
+									<OnValueChanged>
+										if MPOWA.loaded and this:GetValue() then
+											local value = tonumber(this:GetValue())
+											if value > 0 then
+												getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_DYNAMICORIENTATION..this.valuetext[value])
+												MPOWA_SAVE[MPOWA.CurEdit]["dynamicorientation"] = value
+												MPOWA:ApplyConfig(MPOWA.CurEdit)
+											end
+										end
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
 						</Frames>
 					</Frame>
 				</Frames>

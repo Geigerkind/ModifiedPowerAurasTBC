@@ -1,5 +1,4 @@
 --------------- Frames and Funktionallity ---------------
-
 function MPOWA:CreateSave(i)
 	MPOWA_SAVE[i] = {
 		texture = "Interface\\AddOns\\zzzModifiedPowerAuras\\images\\dummy.tga",
@@ -61,6 +60,10 @@ function MPOWA:CreateSave(i)
 		groupnumber = 0,
 		cpstacks = ">=0",
 		castbyme = false,
+		dynamicsorted = false,
+		dynamiccenter = false,
+		dynamicorientation = 1,
+		timerfont = 1
 	}
 end
 
@@ -149,6 +152,13 @@ function MPOWA:Init()
 			if not val["scalefactor"] then
 				MPOWA_SAVE[cat]["scalefactor"] = 0.8
 			end
+
+			if not val["dynamicorientation"] then
+				MPOWA_SAVE[cat]["dynamicorientation"] = 1
+			end
+			if not val["timerfont"] then
+				MPOWA_SAVE[cat]["timerfont"] = 1
+			end
 			
 			if val["flashanim"] then
 				self:AddAnimFlash(cat)
@@ -211,8 +221,6 @@ function MPOWA:Init()
 			end
 			
 			MPOWA_SAVE[cat]["test"] = false
-		else	
-			MPOWA_SAVE[cat] = nil
 		end
 	end
 	self.testAll = false

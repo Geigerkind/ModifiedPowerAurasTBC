@@ -1,5 +1,5 @@
 CreateFrame("Frame", "MPOWA", UIParent)
-MPOWA.Build = 42
+MPOWA.Build = 43
 MPOWA.Cloaded = false
 MPOWA.loaded = false
 MPOWA.selected = 1
@@ -91,31 +91,33 @@ MPOWA.SOUND = {
 }
 
 function MPOWA:OnEvent(event, arg1)
-	if event == "UNIT_AURA" then
-		if arg1 == "target" or self.groupByUnit[arg1] then
-			self:Iterate(arg1)
-		end
-	elseif event == "PLAYER_TARGET_CHANGED" then
-		for c, v in pairs(self.auras) do
-			if v then
-				for cat, val in pairs(v) do
-					if self.active[val] or self.frames[val][1]:IsVisible() then
-						local p = MPOWA_SAVE[val]
-						if p["enemytarget"] or p["friendlytarget"] then
-							self.active[val] = false
-							self:FHide(val)
-							self.frames[val][3]:Hide()
-							self.frames[val][1]:SetAlpha(p["alpha"])
+	if self.loaded then
+		if event == "UNIT_AURA" then
+			if arg1 == "target" or self.groupByUnit[arg1] then
+				self:Iterate(arg1)
+			end
+		elseif event == "PLAYER_TARGET_CHANGED" then
+			for c, v in pairs(self.auras) do
+				if v then
+					for cat, val in pairs(v) do
+						if self.active[val] or self.frames[val][1]:IsVisible() then
+							local p = MPOWA_SAVE[val]
+							if p["enemytarget"] or p["friendlytarget"] then
+								self.active[val] = false
+								self:FHide(val)
+								self.frames[val][3]:Hide()
+								self.frames[val][1]:SetAlpha(p["alpha"])
+							end
 						end
 					end
 				end
 			end
+			self:Iterate("target")
+		elseif event == "RAID_ROSTER_UPDATE" or event == "PARTY_MEMBERS_CHANGED" then
+			self:GetGroup()
+		else
+			self:Iterate("player")
 		end
-		self:Iterate("target")
-	elseif event == "RAID_ROSTER_UPDATE" or event == "PARTY_MEMBERS_CHANGED" then
-		self:GetGroup()
-	elseif event == "PLAYER_AURAS_CHANGED" or event == "PLAYER_REGEN_DISABLED" or event == "PLAYER_REGEN_ENABLED" then
-		self:Iterate("player")
 	else
 		self:Init()
 		self.loaded = true
