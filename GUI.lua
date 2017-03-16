@@ -851,6 +851,8 @@ function MPOWA:Edit()
 		MPowa_ConfigFrame_Container_6_Editbox_GroupNumber:SetText(""..(MPOWA_SAVE[self.CurEdit].groupnumber or ""))
 		MPowa_ConfigFrame_Container_6_Slider_Orientation:SetValue(tnbr(MPOWA_SAVE[self.CurEdit].dynamicorientation))
 		MPowa_ConfigFrame_Container_6_Slider_OrientationText:SetText(MPOWA_SLIDER_DYNAMICORIENTATION..MPowa_ConfigFrame_Container_6_Slider_Orientation.valuetext[tnbr(MPOWA_SAVE[self.CurEdit].dynamicorientation)])
+		MPowa_ConfigFrame_Container_6_Slider_Spacing:SetValue(tnbr(MPOWA_SAVE[self.CurEdit].dynamicspacing))
+		MPowa_ConfigFrame_Container_6_Slider_SpacingText:SetText(MPOWA_SLIDER_SPACING..tnbr(MPOWA_SAVE[self.CurEdit].dynamicspacing))
 		
 		MPowa_ConfigFrame_Container_2_2_Slider_Font:SetValue(tnbr(MPOWA_SAVE[self.CurEdit].timerfont))
 		MPowa_ConfigFrame_Container_2_2_Slider_FontText:SetText(MPOWA_SLIDER_DYNAMICORIENTATION..MPowa_ConfigFrame_Container_2_2_Slider_Font.valuetext[tnbr(MPOWA_SAVE[self.CurEdit].timerfont)])
