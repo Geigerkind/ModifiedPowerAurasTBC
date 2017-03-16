@@ -157,6 +157,9 @@ function MPOWA:Init()
 				MPOWA_SAVE[cat]["timerfont"] = 1
 			end
 			
+			self:CreateIcon(cat)
+			self:ApplyConfig(cat)
+
 			if val["flashanim"] then
 				self:AddAnimFlash(cat)
 			end
@@ -216,9 +219,6 @@ function MPOWA:Init()
 			if not val["cpstacks"] then
 				MPOWA_SAVE[cat]["cpstacks"] = ">=0"
 			end
-
-			self:CreateIcon(cat)
-			self:ApplyConfig(cat)
 			
 			MPOWA_SAVE[cat]["test"] = false
 		end
