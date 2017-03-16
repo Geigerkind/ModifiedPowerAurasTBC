@@ -94,9 +94,6 @@ function MPOWA:Init()
 				self.frames[cat] = {}
 			end
 			
-			self:CreateIcon(cat)
-			self:ApplyConfig(cat)
-			
 			if not self.auras[val["buffname"]] then
 				self.auras[val["buffname"]] = {}
 			end
@@ -219,6 +216,9 @@ function MPOWA:Init()
 			if not val["cpstacks"] then
 				MPOWA_SAVE[cat]["cpstacks"] = ">=0"
 			end
+
+			self:CreateIcon(cat)
+			self:ApplyConfig(cat)
 			
 			MPOWA_SAVE[cat]["test"] = false
 		end
