@@ -511,6 +511,7 @@ function MPOWA:ApplyDynamicGroup(i)
 			self.frames[i][5] = CreateFrame("Frame", nil, UIParent)
 		end
 		local inc = 0
+		local spacing = val["dynamicspacing"] + 65
 		if val["dynamicsorted"] then
 			local grp, final, time = {}, {}
 			for cat, va in pairs(MPOWA_SAVE) do
@@ -551,13 +552,13 @@ function MPOWA:ApplyDynamicGroup(i)
 			for _, va in pairs(final) do
 				self.frames[va[1]][1]:ClearAllPoints()
 				if val["dynamicorientation"] == 1 then
-					self.frames[va[1]][1]:SetPoint("TOPLEFT", self.frames[i][5], "TOPLEFT", inc*70, 0)
+					self.frames[va[1]][1]:SetPoint("TOPLEFT", self.frames[i][5], "TOPLEFT", inc*spacing, 0)
 				elseif val["dynamicorientation"] == 2 then
-					self.frames[va[1]][1]:SetPoint("TOPRIGHT", self.frames[i][5], "TOPRIGHT", -inc*70, 0)
+					self.frames[va[1]][1]:SetPoint("TOPRIGHT", self.frames[i][5], "TOPRIGHT", -inc*spacing, 0)
 				elseif val["dynamicorientation"] == 3 then
-					self.frames[va[1]][1]:SetPoint("TOP", self.frames[i][5], "TOP", 0, -inc*70)
+					self.frames[va[1]][1]:SetPoint("TOP", self.frames[i][5], "TOP", 0, -inc*spacing)
 				else
-					self.frames[va[1]][1]:SetPoint("BOTTOM", self.frames[i][5], "BOTTOM", 0, inc*70)
+					self.frames[va[1]][1]:SetPoint("BOTTOM", self.frames[i][5], "BOTTOM", 0, inc*spacing)
 				end
 				inc = inc + 1;
 			end
@@ -566,38 +567,38 @@ function MPOWA:ApplyDynamicGroup(i)
 				if self.frames[cat] and (tnbr(va["groupnumber"])==i or cat==i) and ((self.active[cat] and not self.NeedUpdate[cat]) or (self.NeedUpdate[cat] and not self.active[cat] and (self:GetCooldown(va["buffname"]) or 0)>0) or va["test"] or self.testAll) then
 					self.frames[cat][1]:ClearAllPoints()
 					if val["dynamicorientation"] == 1 then
-						self.frames[cat][1]:SetPoint("TOPLEFT", self.frames[i][5], "TOPLEFT", inc*70, 0)
+						self.frames[cat][1]:SetPoint("TOPLEFT", self.frames[i][5], "TOPLEFT", inc*spacing, 0)
 					elseif val["dynamicorientation"] == 2 then
-						self.frames[cat][1]:SetPoint("TOPRIGHT", self.frames[i][5], "TOPRIGHT", -inc*70, 0)
+						self.frames[cat][1]:SetPoint("TOPRIGHT", self.frames[i][5], "TOPRIGHT", -inc*spacing, 0)
 					elseif val["dynamicorientation"] == 3 then
-						self.frames[cat][1]:SetPoint("TOP", self.frames[i][5], "TOP", 0, -inc*70)
+						self.frames[cat][1]:SetPoint("TOP", self.frames[i][5], "TOP", 0, -inc*spacing)
 					else
-						self.frames[cat][1]:SetPoint("BOTTOM", self.frames[i][5], "BOTTOM", 0, inc*70)
+						self.frames[cat][1]:SetPoint("BOTTOM", self.frames[i][5], "BOTTOM", 0, inc*spacing)
 					end
 					inc = inc + 1;
 				end
 			end
 		end
 		if val["dynamiccenter"] then
-			self.frames[i][5]:SetWidth(70)
-			self.frames[i][5]:SetHeight(70)
+			self.frames[i][5]:SetWidth(spacing)
+			self.frames[i][5]:SetHeight(spacing)
 			self.frames[i][5]:ClearAllPoints()
 			if val["dynamicorientation"] == 1 then
-				self.frames[i][5]:SetPoint("CENTER", UIParent, "CENTER", val["x"]-(inc-1)*49, val["y"])
+				self.frames[i][5]:SetPoint("CENTER", UIParent, "CENTER", val["x"]-(inc-1)*(val["size"]*spacing), val["y"])
 			elseif val["dynamicorientation"] == 2 then
-				self.frames[i][5]:SetPoint("CENTER", UIParent, "CENTER", val["x"]+(inc-1)*49, val["y"])
+				self.frames[i][5]:SetPoint("CENTER", UIParent, "CENTER", val["x"]+(inc-1)*(val["size"]*spacing), val["y"])
 			elseif val["dynamicorientation"] == 3 then
-				self.frames[i][5]:SetPoint("CENTER", UIParent, "CENTER", val["x"], val["y"]+(inc-1)*49)
+				self.frames[i][5]:SetPoint("CENTER", UIParent, "CENTER", val["x"], val["y"]+(inc-1)*(val["size"]*spacing))
 			else
-				self.frames[i][5]:SetPoint("CENTER", UIParent, "CENTER", val["x"], val["y"]-(inc-1)*49)
+				self.frames[i][5]:SetPoint("CENTER", UIParent, "CENTER", val["x"], val["y"]-(inc-1)*(val["size"]*spacing))
 			end
 		else
 			if val["dynamicorientation"]<3 then
-				self.frames[i][5]:SetWidth(inc*70)
-				self.frames[i][5]:SetHeight(70)
+				self.frames[i][5]:SetWidth(inc*spacing)
+				self.frames[i][5]:SetHeight(spacing)
 			else
-				self.frames[i][5]:SetWidth(70)
-				self.frames[i][5]:SetHeight(inc*70)
+				self.frames[i][5]:SetWidth(spacing)
+				self.frames[i][5]:SetHeight(inc*spacing)
 			end
 			self.frames[i][5]:ClearAllPoints()
 			if val["dynamicorientation"] == 1 then
