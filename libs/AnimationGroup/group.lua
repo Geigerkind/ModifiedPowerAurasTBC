@@ -211,7 +211,10 @@ function AnimationGroup:__LoadProperties()
 
     local point = self.properties.point
     if point and point[1] then
-        self.parent:SetPoint(unpack(point))
+        local p1 = unpack(point)
+        if p1 then
+            self.parent:SetPoint(unpack(point))
+        end
     end
 end
 
