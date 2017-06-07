@@ -65,7 +65,8 @@ function MPOWA:CreateSave(i)
 		dynamicorientation = 1,
 		timerfont = 1,
 		dynamicspacing = 5,
-		blendmode = 1
+		blendmode = 1,
+		minutes = false
 	}
 end
 
@@ -112,7 +113,7 @@ function MPOWA:Init()
 			end
 			
 			if val["used"] then
-				self.NumBuffs = cat
+				self.NumBuffs = self.NumBuffs + 1
 			end
 			
 			if val["rgmname"] then

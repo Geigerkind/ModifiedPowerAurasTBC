@@ -38,11 +38,7 @@ function MPOWA:OnUpdate(elapsed)
 						local duration = self:GetCooldown(path["buffname"]) or 0
 						if path["timer"] then
 							if duration > 0 then
-								if path["hundredth"] then
-									self.frames[cat][3]:SetText(strform("%.2f", duration))
-								else
-									self.frames[cat][3]:SetText(flr(duration))
-								end
+								self.frames[cat][3]:SetText(self:FormatDuration(duration))
 								if path["inverse"] then
 									self:FHide(cat)
 									self.frames[cat][3]:Hide()
@@ -122,11 +118,7 @@ function MPOWA:OnUpdate(elapsed)
 					timeLeft = timeLeft or 0
 					if path["timer"] then
 						if timeLeft > 0 then
-							if path["hundredth"] then -- check it
-								self.frames[cat][3]:SetText(strform("%.2f", timeLeft))
-							else
-								self.frames[cat][3]:SetText(flr(timeLeft))
-							end
+							self.frames[cat][3]:SetText(self:FormatDuration(timeLeft))
 						else
 							self.frames[cat][3]:Hide()
 						end
@@ -164,6 +156,15 @@ function MPOWA:SetTexture(key, texture)
 		p["texture"] = texture
 		self.frames[key][2]:SetTexture(texture)
 	end
+end
+
+function MPOWA:FormatDuration(duration)
+	if path["minutes"] and duration >60 then
+		return ceil(duration/60).."m"
+	elseif path["hundredth"] then
+		return strform("%.2f", duration)
+	end
+	return flr(duration)
 end
 
 function MPOWA:GetCooldown(buff)

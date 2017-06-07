@@ -48,9 +48,8 @@ local function CreateAnimationGroup(self, name, inherits_from)
     return ag
 end
 
-local _CreateFrame = CreateFrame
-function CreateFrame(frameType, name, parent, inheritFrame)
-    local frame = _CreateFrame(frameType, name, parent, inheritFrame)
+function AG:CreateFrame(frameType, name, parent, inheritFrame)
+    local frame = CreateFrame(frameType, name, parent, inheritFrame)
 
     frame.CreateAnimationGroup = CreateAnimationGroup
 

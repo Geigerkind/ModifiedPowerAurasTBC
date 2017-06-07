@@ -468,11 +468,12 @@ function MPOWA:CreateButton(i)
 	MPOWA:ApplyAttributesToButton(i, button)
 end
 
+local AG = LibStub('AnimationGroup-1.0')
 function MPOWA:CreateIcon(i)
 	if not self.frames[i] then
 		self.frames[i] = {}
 	end
-	CreateFrame("Frame", "TextureFrame"..i, UIParent, "MPowa_IconTemplate")
+	AG:CreateFrame("Frame", "TextureFrame"..i, UIParent, "MPowa_IconTemplate")
 	self.frames[i][1] = _G("TextureFrame"..i)
 	self.frames[i][2] = _G("TextureFrame"..i.."_Icon")
 	self.frames[i][3] = _G("TextureFrame"..i.."_Timer")
@@ -625,7 +626,7 @@ function MPOWA:ApplyAttributesToButton(i, button)
 		p = i
 		bool = true
 	end
-	if not _G("ConfigButton"..p.."_Icon") then return end
+	if not _G("ConfigButton"..p) or not MPOWA_SAVE[i] then return end
 	button:ClearAllPoints()
 	button:SetPoint("TOPLEFT",MPowa_ButtonContainer,"TOPLEFT",42*(p-1)+6 - floor((p-1)/7)*7*42,-11-floor((p-1)/7)*41)
 	button:SetID(i)
@@ -678,7 +679,7 @@ function MPOWA:DeselectAll()
 end
 
 function MPOWA:Remove()
-	if ConfigButton1 then
+	if ConfigButton1 and ConfigButton1:IsVisible() then
 		local coeff = (self.Page - 1)*49
 		self.NumBuffs = self.NumBuffs - 1
 		if (self.selected+coeff) == self.CurEdit then
@@ -799,6 +800,7 @@ function MPOWA:Edit()
 		MPowa_ConfigFrame_Container_1_2_Checkbutton_Mine:SetChecked(MPOWA_SAVE[self.CurEdit].castbyme)
 		MPowa_ConfigFrame_Container_1_2_Checkbutton_ShowIfNotActive:SetChecked(MPOWA_SAVE[self.CurEdit].inverse)
 		MPowa_ConfigFrame_Container_2_2_Checkbutton_Timer:SetChecked(MPOWA_SAVE[self.CurEdit].timer)
+		MPowa_ConfigFrame_Container_2_2_Checkbutton_Minutes:SetChecked(MPOWA_SAVE[self.CurEdit].minutes)
 		MPowa_ConfigFrame_Container_1_2_Checkbutton_ShowCooldowns:SetChecked(MPOWA_SAVE[self.CurEdit].cooldown)
 		MPowa_ConfigFrame_Container_1_2_Checkbutton_EnemyTarget:SetChecked(MPOWA_SAVE[self.CurEdit].enemytarget)
 		MPowa_ConfigFrame_Container_1_2_Checkbutton_FriendlyTarget:SetChecked(MPOWA_SAVE[self.CurEdit].friendlytarget)
@@ -861,7 +863,7 @@ function MPOWA:Edit()
 		MPowa_ConfigFrame_Container_1_Icon_Texture:SetBlendMode(MPowa_ConfigFrame_Container_1_Slider_BlendMode.valuetext[tnbr(MPOWA_SAVE[self.CurEdit].blendmode)])
 
 		MPowa_ConfigFrame_Container_2_2_Slider_Font:SetValue(tnbr(MPOWA_SAVE[self.CurEdit].timerfont))
-		MPowa_ConfigFrame_Container_2_2_Slider_FontText:SetText(MPOWA_SLIDER_DYNAMICORIENTATION..MPowa_ConfigFrame_Container_2_2_Slider_Font.valuetext[tnbr(MPOWA_SAVE[self.CurEdit].timerfont)])
+		MPowa_ConfigFrame_Container_2_2_Slider_FontText:SetText(MPOWA_SLIDER_FONT..MPowa_ConfigFrame_Container_2_2_Slider_Font.valuetext[tnbr(MPOWA_SAVE[self.CurEdit].timerfont)])
 		
 		if MPOWA_SAVE[self.CurEdit].flashanim then
 			MPowa_ConfigFrame_Container_2_2_Editbox_FlashAnim:Show()
@@ -1015,8 +1017,8 @@ function MPOWA:OpenColorPicker(n)
 	
 	ColorPickerFrame:SetMovable()
 	ColorPickerFrame:EnableMouse()
-	ColorPickerFrame:SetScript("OnMouseDown", function() ColorPickerFrame:StartMoving() end)
-	ColorPickerFrame:SetScript("OnMouseUp", function() ColorPickerFrame:StopMovingOrSizing() end)
+	--ColorPickerFrameHeader:SetScript("OnMouseDown", function() ColorPickerFrame:StartMoving() end)
+	--ColorPickerFrameHeader:SetScript("OnMouseUp", function() ColorPickerFrame:StopMovingOrSizing() end)
 	
 	ColorPickerFrame:Show()
 end

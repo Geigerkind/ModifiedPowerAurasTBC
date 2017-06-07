@@ -1607,6 +1607,22 @@
 									</OnClick>
 								</Scripts>
 							</CheckButton>
+							<CheckButton name="$parent_Checkbutton_Minutes" inherits="MPowa_CheckTemplate">
+								<Anchors>
+									<Anchor point="LEFT" relativeTo="$parent_Checkbutton_Hundreds" relativePoint="RIGHT">
+										<Offset x="130" y="-26" />
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = MPOWA_CHECKBUTTON_MINUTES_TOOLTIP
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_MINUTES)
+									</OnLoad>
+									<OnClick>
+										MPOWA:Checkbutton("minutes")
+									</OnClick>
+								</Scripts>
+							</CheckButton>
 							<CheckButton name="$parent_Checkbutton_FlashAnim" inherits="MPowa_CheckTemplate">
 								<Anchors>
 									<Anchor point="TOPLEFT" relativeTo="$parent_Checkbutton_Timer" relativePoint="BOTTOMLEFT">
