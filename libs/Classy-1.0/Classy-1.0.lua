@@ -22,5 +22,10 @@ function Classy:New(frameType, parentClass)
             return setmetatable(obj, self.mt)
 	end
 
+	class.GetObjectType = function(self, obj)
+		return "Frame"
+	end
+
+
 	return class
 end

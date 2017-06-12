@@ -38,7 +38,7 @@ function MPOWA:OnUpdate(elapsed)
 						local duration = self:GetCooldown(path["buffname"]) or 0
 						if path["timer"] then
 							if duration > 0 then
-								self.frames[cat][3]:SetText(self:FormatDuration(duration))
+								self.frames[cat][3]:SetText(self:FormatDuration(duration, path))
 								if path["inverse"] then
 									self:FHide(cat)
 									self.frames[cat][3]:Hide()
@@ -118,7 +118,7 @@ function MPOWA:OnUpdate(elapsed)
 					timeLeft = timeLeft or 0
 					if path["timer"] then
 						if timeLeft > 0 then
-							self.frames[cat][3]:SetText(self:FormatDuration(timeLeft))
+							self.frames[cat][3]:SetText(self:FormatDuration(timeLeft, path))
 						else
 							self.frames[cat][3]:Hide()
 						end
@@ -158,7 +158,7 @@ function MPOWA:SetTexture(key, texture)
 	end
 end
 
-function MPOWA:FormatDuration(duration)
+function MPOWA:FormatDuration(duration, path)
 	if path["minutes"] and duration >60 then
 		return ceil(duration/60).."m"
 	elseif path["hundredth"] then
@@ -178,7 +178,7 @@ function MPOWA:GetCooldown(buff)
 			if (name) then
 				if strfind(strlower(buff), strlower(name)) then
 					if duration>2 then
-						return ((start or 0)+(duration or 0))-GT()
+						return ((start or 0)+(duration or 0))-GT()+1
 					else
 						return 0
 					end
@@ -191,13 +191,13 @@ function MPOWA:GetCooldown(buff)
 							if (not name) then break end
 							if strfind(strlower(buff), strlower(name)) then
 								if duration>2 then
-									return ((start or 0)+(duration or 0))-GT()
+									return ((start or 0)+(duration or 0))-GT()+1
 								else
 									return 0
 								end
 							elseif p == 4 and u == GetContainerNumSlots(p) then
 								if duration>2 then
-									return ((start or 0)+(duration or 0))-GT()
+									return ((start or 0)+(duration or 0))-GT()+1
 								else
 									return 0
 								end
@@ -211,7 +211,7 @@ function MPOWA:GetCooldown(buff)
 		end
 	else
 		if duration>2 then
-			return ((start or 0)+(duration or 0))-GT()
+			return ((start or 0)+(duration or 0))-GT()+1
 		else
 			return 0
 		end
