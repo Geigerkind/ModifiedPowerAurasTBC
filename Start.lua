@@ -67,7 +67,7 @@ function MPOWA:CreateSave(i)
 		dynamicspacing = 5,
 		blendmode = 1,
 		minutes = false,
-		timerfontsize = 16,
+		timerfontsize = 1,
 	}
 end
 
