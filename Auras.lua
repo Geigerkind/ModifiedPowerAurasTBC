@@ -13,6 +13,7 @@ local UnitAffectingCombat = UnitAffectingCombat
 local UnitInRaid = UnitInRaid
 local UnitBuff = UnitBuff 
 local UnitDebuff = UnitDebuff
+local UnitMana = UnitMana
 local strsub = strsub
 local strlower = strlower
 local GetComboPoints = GetComboPoints
@@ -25,6 +26,7 @@ local GetContainerNumSlots = GetContainerNumSlots
 local GetSpellName = GetSpellName
 
 local UpdateTime, LastUpdate = 0.05, 0
+local cdset = {}
 
 function MPOWA:OnUpdate(elapsed)
 	LastUpdate = LastUpdate + elapsed
@@ -36,6 +38,10 @@ function MPOWA:OnUpdate(elapsed)
 					self.frames[cat][4]:Hide()
 					if path["cooldown"] then
 						local duration = self:GetCooldown(path["buffname"]) or 0
+						if path["cdclockanimout"] and duration<=path["animduration"]+0.4 and duration>=path["animduration"] and (not cdset[cat] or cdset[cat]+0.5<GT()) then
+							cdset[cat] = GT()
+							self.frames[cat][5]:SetCooldown(GT(), path["animduration"])
+						end
 						if path["timer"] then
 							if duration > 0 then
 								self.frames[cat][3]:SetText(self:FormatDuration(duration, path))
@@ -116,6 +122,10 @@ function MPOWA:OnUpdate(elapsed)
 					end
 					-- Duration
 					timeLeft = timeLeft or 0
+					if path["cdclockanimout"] and timeLeft<=path["animduration"]+0.4 and timeLeft>=path["animduration"] and (not cdset[cat] or cdset[cat]+0.5<GT()) then
+						cdset[cat] = GT()
+						self.frames[cat][5]:SetCooldown(GT(), path["animduration"])
+					end
 					if path["timer"] then
 						if timeLeft > 0 then
 							self.frames[cat][3]:SetText(self:FormatDuration(timeLeft, path))
@@ -124,7 +134,7 @@ function MPOWA:OnUpdate(elapsed)
 						end
 					end
 					self:Flash(elapsed, cat, timeLeft)
-					if path["inverse"] then
+					if path["inverse"] and (path["buffname"] ~= "unitpower" and not path["inverse"]) then
 						self:FHide(cat)
 					else
 						if path["secsleft"] then
@@ -152,7 +162,7 @@ end
 
 function MPOWA:SetTexture(key, texture)
 	local p = MPOWA_SAVE[key]
-	if p["texture"] == "Interface\\AddOns\\zzzModifiedPowerAuras\\images\\dummy.tga" then
+	if texture and p["texture"] == "Interface\\AddOns\\zzzModifiedPowerAuras\\images\\dummy.tga" then
 		p["texture"] = texture
 		self.frames[key][2]:SetTexture(texture)
 	end
@@ -239,6 +249,22 @@ function MPOWA:Iterate(unit)
 		self:InInstance()
 	end
 	
+	for cat, val in pairs(MPOWA_SAVE) do
+		if (val["buffname"] == "unitpower") then
+			local tarid = 44
+			if (unit == "target") then 
+				tarid = 45
+			elseif (string.find(unit,"raid")) then
+				local a,b = string.find(unit,"raid")
+				tarid = tonumber(string.sub(unit, b+1))+45
+			elseif (string.find(unit,"party")) then
+				local a,b = string.find(unit,"party")
+				tarid = tonumber(string.sub(unit, b+1))+45
+			end
+			self:Push("unitpower", unit, tarid, false)
+		end
+	end
+
 	for i=1, 40 do
 		local buff, debuff, castbyme
 		buff,_,_,_,_,_,castbyme = UnitBuff(unit, i)
@@ -327,17 +353,36 @@ function MPOWA:IsStacks(count, id, kind)
 	if MPOWA_SAVE[id][kind] ~= "" then
 		local con = strsub(MPOWA_SAVE[id][kind], 1, 2)
 		local amount = tnbr(strsub(MPOWA_SAVE[id][kind], 3))
+		if not con then
+			con = strsub(MPOWA_SAVE[id][kind], 1, 1)
+			amount = tnbr(strsub(MPOWA_SAVE[id][kind], 2))
+		end
+
+		if MPOWA_SAVE[id]["buffname"] == "unitpower" then
+			count = UnitMana(MPOWA_SAVE[id]["unit"] or "player")
+			if MPOWA_SAVE[id]["inverse"] then
+				if (con == ">=") then
+					con = "<"
+				elseif (con == "<=") then
+					con = ">"
+				elseif con == ">" then
+					con = "<="
+				elseif (con == "<") then
+					con = ">="
+				elseif (con == "=") then
+					con = "!"
+				elseif (con == "!") then
+					con = "="
+				end	
+			end
+		end
+
 		if amount ~= nil and con ~= nil then
 			if con == ">=" and count >= amount then
 				return true
 			elseif con == "<=" and count <= amount then
 				return true
-			end
-		end
-		con = strsub(MPOWA_SAVE[id][kind], 1, 1)
-		amount = tnbr(strsub(MPOWA_SAVE[id][kind], 2))
-		if amount ~= nil and con ~= nil then
-			if con == "<" and count < amount then
+			elseif con == "<" and count < amount then
 				return true
 			elseif con == ">" and count > amount then
 				return true

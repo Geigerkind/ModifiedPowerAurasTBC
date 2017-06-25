@@ -66,7 +66,8 @@ function MPOWA:CreateSave(i)
 		timerfont = 1,
 		dynamicspacing = 5,
 		blendmode = 1,
-		minutes = false
+		minutes = false,
+		timerfontsize = 16,
 	}
 end
 
@@ -102,7 +103,7 @@ function MPOWA:Init()
 			end
 			tinsert(self.auras[val["buffname"]], cat)
 			
-			if val["inverse"] or val["cooldown"] then
+			if (val["inverse"] or val["cooldown"]) and val["buffname"] ~= "unitpower" then
 				self.NeedUpdate[cat] = true
 			end
 			
@@ -166,6 +167,10 @@ function MPOWA:Init()
 
 			if not val["blendmode"] then
 				MPOWA_SAVE[cat]["blendmode"] = 1
+			end
+
+			if not val["timerfontsize"] then
+				MPOWA_SAVE[cat]["timerfontsize"] = 1
 			end
 			
 			self:CreateIcon(cat)
@@ -249,3 +254,6 @@ MPOWA:RegisterEvent("PARTY_MEMBERS_CHANGED")
 MPOWA:RegisterEvent("PLAYER_AURAS_CHANGED")
 MPOWA:RegisterEvent("PLAYER_REGEN_DISABLED")
 MPOWA:RegisterEvent("PLAYER_REGEN_ENABLED")
+MPOWA:RegisterEvent("UNIT_MANA")
+MPOWA:RegisterEvent("UNIT_RAGE")
+MPOWA:RegisterEvent("UNIT_ENERGY")

@@ -734,6 +734,7 @@
 											elseif value == (min + 25) then
 												SLIDER_POSX_MIN = true
 											end
+											MPowa_ConfigFrame_Container_1_Editbox_PosX:SetText(MPOWA_SAVE[MPOWA.CurEdit].x)
 										end
 									</OnValueChanged>
 									<OnMouseUp>
@@ -818,6 +819,7 @@
 											elseif value == (min + 25) then
 												SLIDER_POSY_MIN = true
 											end
+											MPowa_ConfigFrame_Container_1_Editbox_PosY:SetText(MPOWA_SAVE[MPOWA.CurEdit].y)
 										end
 									</OnValueChanged>
 									<OnMouseUp>
@@ -1323,7 +1325,7 @@
 										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_SHOWIFNOTACTIVE)
 									</OnLoad>
 									<OnClick>
-										if not MPOWA_SAVE[MPOWA.CurEdit]["inverse"] then
+										if not MPOWA_SAVE[MPOWA.CurEdit]["inverse"] and MPOWA_SAVE[MPOWA.CurEdit]["buffname"] ~= "unitpower" then
 											MPOWA.NeedUpdate[MPOWA.CurEdit] = true
 										else
 											if not MPOWA_SAVE[MPOWA.CurEdit]["cooldown"] then
@@ -1833,6 +1835,35 @@
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
+							<Slider name="$parent_Slider_FontSize" inherits="MPowa_SliderTemplate">
+								<Size x="130" y="16" />
+								<Anchors>
+									<Anchor point="TOP" relativeTo="$parent_Slider_Font" relativePoint="BOTTOM">
+										<Offset x="0" y="-25" />
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.aide = MPOWA_SLIDER_FONTSIZE_TOOLTIP
+										this:SetMinMaxValues(1,3)
+										this:SetValue(0.1)
+										this:SetValueStep(0.1)
+										getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_FONTSIZE)
+										getglobal(this:GetName().."Low"):SetText("1")
+										getglobal(this:GetName().."High"):SetText("3")
+									</OnLoad>
+									<OnValueChanged>
+										if MPOWA.loaded and this:GetValue() then
+											local value = tonumber(this:GetValue())
+											if value > 0 then
+												getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_FONTSIZE..value)
+												MPOWA_SAVE[MPOWA.CurEdit]["timerfontsize"] = value
+												MPOWA:ApplyConfig(MPOWA.CurEdit)
+											end
+										end
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
 						</Frames>
 					</Frame>
 					<Frame name="$parent_3" hidden="true" inherits="MPowa_ContainerTemplate">
@@ -2295,6 +2326,22 @@
 									</OnClick>
 								</Scripts>
 							</CheckButton>
+							<CheckButton name="$parent_CooldownClockIn" inherits="MPowa_CheckTemplate">
+								<Anchors>
+									<Anchor point="TOP" relativeTo="$parent_BatmanIn" relativePoint="BOTTOM">
+										<Offset x="0" y="1" />
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = MPOWA_CHECKBUTTON_CDCLOCK_TOOLTIP
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_CDCLOCK)
+									</OnLoad>
+									<OnClick>
+										MPOWA:Checkbutton("cdclockanimin")
+									</OnClick>
+								</Scripts>
+							</CheckButton>
 							<CheckButton name="$parent_FadeOut" inherits="MPowa_CheckTemplate">
 								<Anchors>
 									<Anchor point="RIGHT" relativeTo="$parent_FadeIn" relativePoint="LEFT">
@@ -2411,6 +2458,22 @@
 									<OnClick>
 										MPOWA:Checkbutton("translateanim")
 										MPOWA:AddAnimTranslate(MPOWA.CurEdit)
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<CheckButton name="$parent_CooldownClockOut" inherits="MPowa_CheckTemplate">
+								<Anchors>
+									<Anchor point="TOP" relativeTo="$parent_Translate" relativePoint="BOTTOM">
+										<Offset x="0" y="1" />
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = MPOWA_CHECKBUTTON_CDCLOCK_TOOLTIP
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_CDCLOCK)
+									</OnLoad>
+									<OnClick>
+										MPOWA:Checkbutton("cdclockanimout")
 									</OnClick>
 								</Scripts>
 							</CheckButton>
