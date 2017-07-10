@@ -94,6 +94,10 @@ local icons = {
 		[icopath.."Spell_Nature_NullifyDisease"] = true,
 		[icopath.."Spell_Holy_LayOnHands"] = true,
 		[icopath.."spell_holy_powerinfusion"] = true,
+		[icopath.."spell_shadow_demonicfortitude"] = true,
+		[icopath.."spell_arcane_studentofmagic"] = true,
+		[icopath.."spell_arcane_massdispel"] = true,
+		[icopath.."spell_shadow_shadowfiend"] = true,
 	},
 	["hunter"] = {
 		[icopath.."Ability_Hunter_SniperShot"] = true,
@@ -478,8 +482,8 @@ function MPOWA:CreateIcon(i)
 	self.frames[i][2] = _G("TextureFrame"..i.."_Icon")
 	self.frames[i][3] = _G("TextureFrame"..i.."_Timer")
 	self.frames[i][4] = _G("TextureFrame"..i.."_Count")
-	self.frames[i][5] = CreateFrame("Cooldown", "TextureFrame"..i.."_Cooldown", self.frames[i][1], "CooldownFrameTemplate")
-	self.frames[i][5]:SetAllPoints(self.frames[i][1])
+	self.frames[i][6] = CreateFrame("Cooldown", "TextureFrame"..i.."_Cooldown", self.frames[i][1], "CooldownFrameTemplate")
+	self.frames[i][6]:SetAllPoints(self.frames[i][1])
 	self.frames[i][1]:SetID(i)
 	self.frames[i][1]:EnableMouse(0)
 	self.frames[i][1]:Hide()

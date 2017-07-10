@@ -22,7 +22,7 @@ function MPOWA:FHide(key)
 	local p = MPOWA_SAVE[key]
 	if self.frames[key][1]:IsVisible() and not self.testall and not p["test"] then
 		if p["cdclockanimout"] then
-			self.frames[key][5]:SetCooldown(0, 0)
+			self.frames[key][6]:SetCooldown(0, 0)
 		end
 		if p["batmananimout"] then
 			self:PlayAnim("batmananimout", key, "batmananimout")
@@ -82,7 +82,7 @@ function MPOWA:FShow(key)
 			self:ApplyDynamicGroup(tnbr(p["groupnumber"]))
 		end
 		if p["cdclockanimin"] then
-			self.frames[key][5]:SetCooldown(GT(), p["animduration"])
+			self.frames[key][6]:SetCooldown(GT(), p["animduration"])
 		end
 		self.frames[key][1]:Show()
 		if p["batmananimin"] then
