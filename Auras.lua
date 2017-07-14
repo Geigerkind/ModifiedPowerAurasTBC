@@ -24,6 +24,7 @@ local GetContainerItemLink = GetContainerItemLink
 local GetInventoryItemLink = GetInventoryItemLink
 local GetContainerNumSlots = GetContainerNumSlots
 local GetSpellName = GetSpellName
+local UnitIsFriend = UnitIsFriend
 
 local UpdateTime, LastUpdate = 0.05, 0
 local cdset = {}
@@ -33,7 +34,8 @@ function MPOWA:OnUpdate(elapsed)
 	if LastUpdate >= UpdateTime then
 		for cat, val in pairs(self.NeedUpdate) do
 			if val then
-				local path = MPOWA_SAVE[cat]
+				local path = self.SAVE[cat]
+				if path["enemytarget"] and not UN("target") and not UnitIsFriend("player", "target") then return end
 				if not self.active[cat] and self:TernaryReturn(cat, "alive", self:Reverse(UnitIsDeadOrGhost("player"))) and self:TernaryReturn(cat, "mounted", self.mounted) and self:TernaryReturn(cat, "incombat", UnitAffectingCombat("player")) and self:TernaryReturn(cat, "inparty", self.party) and self:TernaryReturn(cat, "inraid", UnitInRaid("player")) and self:TernaryReturn(cat, "inbattleground", self.bg) and self:TernaryReturn(cat, "inraidinstance", self.instance) then
 					self.frames[cat][4]:Hide()
 					if path["cooldown"] then
@@ -105,7 +107,7 @@ function MPOWA:OnUpdate(elapsed)
 		end
 		for cat, val in pairs(self.active) do
 			if val then
-				local path = MPOWA_SAVE[cat]
+				local path = self.SAVE[cat]
 				local text, count, timeLeft = "", 0, 0, 0
 				if val[3] then
 					_, _, text, count, _, _, timeLeft  =  UnitDebuff(val[1], val[2]);
@@ -161,7 +163,7 @@ function MPOWA:OnUpdate(elapsed)
 end
 
 function MPOWA:SetTexture(key, texture)
-	local p = MPOWA_SAVE[key]
+	local p = self.SAVE[key]
 	if texture and p["texture"] == "Interface\\AddOns\\zzzModifiedPowerAuras\\images\\dummy.tga" then
 		p["texture"] = texture
 		self.frames[key][2]:SetTexture(texture)
@@ -249,19 +251,21 @@ function MPOWA:Iterate(unit)
 		self:InInstance()
 	end
 	
-	for cat, val in pairs(MPOWA_SAVE) do
+	for cat, val in pairs(self.SAVE) do
 		if (val["buffname"] == "unitpower") then
 			local tarid = 44
-			if (unit == "target") then 
-				tarid = 45
-			elseif (string.find(unit,"raid")) then
-				--local a,b = string.find(unit,"raid")
-				tarid = tonumber(string.sub(unit, 5))+45
-			elseif (string.find(unit,"party")) then
-				--local a,b = string.find(unit,"party")
-				tarid = tonumber(string.sub(unit, 6))+45
+			if unit then
+				if (unit == "target") then 
+					tarid = 45
+				elseif (string.find(unit,"raid")) then
+					--local a,b = string.find(unit,"raid")
+					tarid = tonumber(string.sub(unit, 5))+45
+				elseif (string.find(unit,"party")) then
+					--local a,b = string.find(unit,"party")
+					tarid = tonumber(string.sub(unit, 6))+45
+				end
+				self:Push("unitpower", unit, tarid, false)
 			end
-			self:Push("unitpower", unit, tarid, false)
 		end
 	end
 
@@ -278,7 +282,7 @@ function MPOWA:Iterate(unit)
 	for cat, val in pairs(self.active) do
 		if val then
 			if not BuffExist[cat] then
-				local p = MPOWA_SAVE[cat]
+				local p = self.SAVE[cat]
 				if ((p["friendlytarget"] or p["enemytarget"]) and unit=="target") or (not p["raidgroupmember"] and not p["friendlytarget"] and not p["enemytarget"] and unit=="player") or p["raidgroupmember"] then
 					self.active[cat] = false
 					self.frames[cat][3]:Hide()
@@ -302,7 +306,7 @@ end
 function MPOWA:Push(aura, unit, i, isdebuff, castbyme)
 	if self.auras[aura] then
 		for cat, val in pairs(self.auras[aura]) do
-			local path = MPOWA_SAVE[val]
+			local path = self.SAVE[val]
 			local bypass = self.active[val]
 			local tex = ""
 			if path["secondspecifier"] then
@@ -336,9 +340,7 @@ function MPOWA:Push(aura, unit, i, isdebuff, castbyme)
 								PlaySoundFile("Interface\\AddOns\\zzzModifiedPowerAuras\\Sounds\\"..self.SOUND[path.beginsound], "master")
 							end
 						end
-						if not path["secsleft"] then
-							self:FShow(val)
-						end
+						self:FShow(val)
 						if path["timer"] then
 							self.frames[val][3]:Show()
 						end
@@ -350,17 +352,17 @@ function MPOWA:Push(aura, unit, i, isdebuff, castbyme)
 end
 
 function MPOWA:IsStacks(count, id, kind)
-	if MPOWA_SAVE[id][kind] ~= "" then
-		local con = strsub(MPOWA_SAVE[id][kind], 1, 2)
-		local amount = tnbr(strsub(MPOWA_SAVE[id][kind], 3))
+	if self.SAVE[id][kind] ~= "" then
+		local con = strsub(self.SAVE[id][kind], 1, 2)
+		local amount = tnbr(strsub(self.SAVE[id][kind], 3))
 		if not con then
-			con = strsub(MPOWA_SAVE[id][kind], 1, 1)
-			amount = tnbr(strsub(MPOWA_SAVE[id][kind], 2))
+			con = strsub(self.SAVE[id][kind], 1, 1)
+			amount = tnbr(strsub(self.SAVE[id][kind], 2))
 		end
 
-		if MPOWA_SAVE[id]["buffname"] == "unitpower" then
-			count = UnitMana(MPOWA_SAVE[id]["unit"] or "player")
-			if MPOWA_SAVE[id]["inverse"] then
+		if self.SAVE[id]["buffname"] == "unitpower" then
+			count = UnitMana(self.SAVE[id]["unit"] or "player")
+			if self.SAVE[id]["inverse"] then
 				if (con == ">=") then
 					con = "<"
 				elseif (con == "<=") then
@@ -392,10 +394,10 @@ function MPOWA:IsStacks(count, id, kind)
 				return true
 			end
 		end
-		con = strfind(MPOWA_SAVE[id][kind], "-")
+		con = strfind(self.SAVE[id][kind], "-")
 		if con then
-			local amount1 = tnbr(strsub(MPOWA_SAVE[id][kind], 1, con-1))
-			local amount2 = tnbr(strsub(MPOWA_SAVE[id][kind], con+1))
+			local amount1 = tnbr(strsub(self.SAVE[id][kind], 1, con-1))
+			local amount2 = tnbr(strsub(self.SAVE[id][kind], con+1))
 			if con and amount1 and amount2 and ((count >= amount1 and count <= amount2) or (count >= amount2 and count <= amount1)) then
 				return true
 			end
