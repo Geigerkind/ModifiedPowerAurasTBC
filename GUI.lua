@@ -43,6 +43,7 @@ local icons = {
 		[icopath.."ability_thunderbolt"] = true,
 		[icopath.."ability_warrior_revenge"] = true,
 		[icopath.."spell_nature_bloodlust"] = true,
+		[icopath.."ability_whirlwind"] = true,
 	},
 	["rogue"] = {
 		[icopath.."Ability_Sap"] = true,
