@@ -20,7 +20,7 @@ end
 
 function MPOWA:FHide(key)
 	local p = self.SAVE[key]
-	if self.frames[key][1]:IsVisible() and not self.testall and not p["test"] then
+	if p and self.frames[key] and self.frames[key][1]:IsVisible() and not self.testall and not p["test"] then
 		if p["cdclockanimout"] then
 			self.frames[key][6]:SetCooldown(0, 0)
 		end
