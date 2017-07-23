@@ -253,18 +253,19 @@ function MPOWA:Iterate(unit)
 	
 	for cat, val in pairs(self.SAVE) do
 		if (val["buffname"] == "unitpower") then
-			local tarid = 44
-			if unit then
-				if (unit == "target") then 
-					tarid = 45
-				elseif (string.find(unit,"raid")) then
-					--local a,b = string.find(unit,"raid")
-					tarid = tonumber(string.sub(unit, 5))+45
-				elseif (string.find(unit,"party")) then
-					--local a,b = string.find(unit,"party")
-					tarid = tonumber(string.sub(unit, 6))+45
+			local unit = arg1
+			if (unit == "target") then 
+				self:Push("unitpower", unit, 45, false)
+			elseif (string.find(unit,"raid")) then
+				local st = string.sub(unit, 5)
+				if st and tonumber(st) then
+					self:Push("unitpower", unit, (tonumber(st) or 0)+45, false)
 				end
-				self:Push("unitpower", unit, tarid, false)
+			elseif (string.find(unit,"party")) then
+				local st = string.sub(unit, 6)
+				if st and tonumber(st) then
+					self:Push("unitpower", unit, (tonumber(st) or 0)+45, false)
+				end
 			end
 		end
 	end
@@ -317,9 +318,9 @@ function MPOWA:Push(aura, unit, i, isdebuff, castbyme)
 				end
 				tex = strlower(strsub(tex, strfind(tex, "Icons")+6))
 			end
+			BuffExist[val] = true
 			if (not path["castbyme"] or (path["castbyme"] and castbyme)) and path["isdebuff"]==isdebuff and ((path["secondspecifier"] and (strlower(path["secondspecifiertext"])==tex)) or not path["secondspecifier"]) then
 				if self:TernaryReturn(val, "alive", self:Reverse(UnitIsDeadOrGhost("player"))) and self:TernaryReturn(val, "mounted", self.mounted) and self:TernaryReturn(val, "incombat", UnitAffectingCombat("player")) and self:TernaryReturn(val, "inparty", self.party) and self:TernaryReturn(val, "inraid", UnitInRaid("player")) and self:TernaryReturn(val, "inbattleground", self.bg) and self:TernaryReturn(val, "inraidinstance", self.instance) and not path["cooldown"] and self:IsStacks(GetComboPoints("player", "target"), val, "cpstacks") then
-					BuffExist[val] = true
 					if path["enemytarget"] and unit == "target" then
 						self.active[val] = {unit, i, isdebuff}
 					elseif path["friendlytarget"] and unit == "target" then
