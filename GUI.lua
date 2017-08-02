@@ -765,6 +765,7 @@ function MPOWA:Edit()
 	if ConfigButton1 then
 		local coeff = (self.Page - 1)*49
 		self.CurEdit = self.selected+coeff
+		if not self.SAVE[self.CurEdit] then return end
 		for i=1, self.NumBuffs do
 			if self.frames[i] then
 				self.frames[i][1]:EnableMouse(false)

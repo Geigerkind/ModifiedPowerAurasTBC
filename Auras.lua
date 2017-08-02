@@ -32,11 +32,16 @@ local cdset = {}
 function MPOWA:OnUpdate(elapsed)
 	LastUpdate = LastUpdate + elapsed
 	if LastUpdate >= UpdateTime then
+		local p1, p2
 		for cat, val in pairs(self.NeedUpdate) do
 			if val then
 				local path = self.SAVE[cat]
 				if path["enemytarget"] and not UN("target") and not UnitIsFriend("player", "target") then return end
-				if not self.active[cat] and self:TernaryReturn(cat, "alive", self:Reverse(UnitIsDeadOrGhost("player"))) and self:TernaryReturn(cat, "mounted", self.mounted) and self:TernaryReturn(cat, "incombat", UnitAffectingCombat("player")) and self:TernaryReturn(cat, "inparty", self.party) and self:TernaryReturn(cat, "inraid", UnitInRaid("player")) and self:TernaryReturn(cat, "inbattleground", self.bg) and self:TernaryReturn(cat, "inraidinstance", self.instance) then
+				p1, p2 = self:TernaryReturn(cat, "inparty", self:InParty()), self:TernaryReturn(cat, "inraid", UnitInRaid("player"))
+				if not self.active[cat] and self:TernaryReturn(cat, "alive", self:Reverse(UnitIsDeadOrGhost("player"))) 
+				and self:TernaryReturn(cat, "mounted", self.mounted) and self:TernaryReturn(cat, "incombat", UnitAffectingCombat("player")) 
+				and (((p1 or p2) and ((path["inparty"]==0 or path["inparty"]==true) and (path["inraid"]==0 or path["inraid"]==true))) or (p1 and p2))
+				and self:TernaryReturn(cat, "inbattleground", self.bg) and self:TernaryReturn(cat, "inraidinstance", self.instance) then
 					self.frames[cat][4]:Hide()
 					if path["cooldown"] then
 						local duration = self:GetCooldown(path["buffname"]) or 0
@@ -253,7 +258,7 @@ function MPOWA:Iterate(unit)
 	BuffExist = {}
 	if unit=="player" then
 		self:IsMounted()
-		self:InParty()
+		--self:InParty()
 		self:InBG()
 		self:InInstance()
 	end
@@ -295,13 +300,6 @@ function MPOWA:Iterate(unit)
 					self.active[cat] = false
 					self.frames[cat][3]:Hide()
 					if not p["inverse"] and not p["cooldown"] then
-						if p["useendsound"] then
-							if p.endsound < 16 then
-								PlaySound(self.SOUND[p.endsound], "master")
-							else
-								PlaySoundFile("Interface\\AddOns\\zzzModifiedPowerAuras\\Sounds\\"..self.SOUND[p.endsound], "master")
-							end
-						end
 						self.frames[cat][1]:SetAlpha(p["alpha"])
 						self:FHide(cat)
 					end
@@ -327,7 +325,12 @@ function MPOWA:Push(aura, unit, i, isdebuff, castbyme)
 			end
 			BuffExist[val] = true
 			if (not path["castbyme"] or (path["castbyme"] and castbyme)) and path["isdebuff"]==isdebuff and ((path["secondspecifier"] and (strlower(path["secondspecifiertext"])==tex)) or not path["secondspecifier"]) then
-				if self:TernaryReturn(val, "alive", self:Reverse(UnitIsDeadOrGhost("player"))) and self:TernaryReturn(val, "mounted", self.mounted) and self:TernaryReturn(val, "incombat", UnitAffectingCombat("player")) and self:TernaryReturn(val, "inparty", self.party) and self:TernaryReturn(val, "inraid", UnitInRaid("player")) and self:TernaryReturn(val, "inbattleground", self.bg) and self:TernaryReturn(val, "inraidinstance", self.instance) and not path["cooldown"] and self:IsStacks(GetComboPoints("player", "target"), val, "cpstacks") then
+				local p1, p2 = self:TernaryReturn(val, "inparty", self:InParty()), self:TernaryReturn(val, "inraid", UnitInRaid("player"))
+				if self:TernaryReturn(val, "alive", self:Reverse(UnitIsDeadOrGhost("player"))) and self:TernaryReturn(val, "mounted", self.mounted) 
+				and self:TernaryReturn(val, "incombat", UnitAffectingCombat("player")) 
+				and (((p1 or p2) and ((path["inparty"]==0 or path["inparty"]==true) and (path["inraid"]==0 or path["inraid"]==true))) or (p1 and p2))
+				and self:TernaryReturn(val, "inbattleground", self.bg) and self:TernaryReturn(val, "inraidinstance", self.instance) 
+				and not path["cooldown"] and self:IsStacks(GetComboPoints("player", "target"), val, "cpstacks") then
 					if path["enemytarget"] and unit == "target" then
 						self.active[val] = {unit, i, isdebuff}
 					elseif path["friendlytarget"] and unit == "target" then
@@ -340,13 +343,6 @@ function MPOWA:Push(aura, unit, i, isdebuff, castbyme)
 					if self.active[val] and not bypass then
 						if tnbr(self.frames[val][1]:GetAlpha())<=0.1 then
 							self.frames[val][1]:SetAlpha(tnbr(path["alpha"]))
-						end
-						if path["usebeginsound"] then
-							if path.beginsound < 16 then
-								PlaySound(self.SOUND[path.beginsound], "master")
-							else
-								PlaySoundFile("Interface\\AddOns\\zzzModifiedPowerAuras\\Sounds\\"..self.SOUND[path.beginsound], "master")
-							end
 						end
 						self:FShow(val)
 						if path["timer"] then
