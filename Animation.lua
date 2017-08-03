@@ -25,7 +25,7 @@ function MPOWA:FHide(key)
 			if p.endsound < 16 then
 				PlaySound(self.SOUND[p.endsound], "master")
 			else
-				PlaySoundFile("Interface\\AddOns\\ModifiedPowerAuras\\Sounds\\"..self.SOUND[p.endsound], "master")
+				PlaySoundFile("Interface\\AddOns\\zzzModifiedPowerAuras\\Sounds\\"..self.SOUND[p.endsound], "master")
 			end
 		end
 		if p["cdclockanimout"] then
@@ -87,7 +87,7 @@ function MPOWA:FShow(key)
 			if p.beginsound < 16 then
 				PlaySound(self.SOUND[p.beginsound], "master")
 			else
-				PlaySoundFile("Interface\\AddOns\\ModifiedPowerAuras\\Sounds\\"..self.SOUND[path.beginsound], "master")
+				PlaySoundFile("Interface\\AddOns\\zzzModifiedPowerAuras\\Sounds\\"..self.SOUND[path.beginsound], "master")
 			end
 		end
 		if p["isdynamicgroup"] then
