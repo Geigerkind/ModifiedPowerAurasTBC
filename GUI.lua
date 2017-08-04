@@ -544,10 +544,10 @@ function MPOWA:ApplyDynamicGroup(i)
 							end
 							grp[cat] = time or 0
 						else
-							grp[cat] = self:GetCooldown(va["buffname"]) or 0
-							--if (self.NeedUpdate[cat] and not self.active[cat] and time>0) then
-								--grp[cat] = time
-							--end
+							time = self:GetCooldown(va["buffname"]) or 0
+							if (self.NeedUpdate[cat] and not self.active[cat] and (time>0 or not va["cooldown"])) then
+								grp[cat] = time
+							end
 						end 
 					end
 				end
@@ -581,7 +581,7 @@ function MPOWA:ApplyDynamicGroup(i)
 			end
 		else
 			for cat, va in pairs(self.SAVE) do
-				if self.frames[cat] and (tnbr(va["groupnumber"])==i or cat==i) and ((self.active[cat] and not self.NeedUpdate[cat]) or (self.NeedUpdate[cat] and not self.active[cat] and ((self:GetCooldown(va["buffname"]) or 0)>0) or not va["cooldown"]) or va["test"] or self.testAll) then
+				if self.frames[cat] and (tnbr(va["groupnumber"])==i or cat==i) and (self.active[cat] and not self.NeedUpdate[cat]) or (self.NeedUpdate[cat] and not self.active[cat] and (((self:GetCooldown(va["buffname"]) or 0)>0) or not va["cooldown"]) or va["test"] or self.testAll) then
 					self.frames[cat][1]:ClearAllPoints()
 					if val["dynamicorientation"] == 1 then
 						self.frames[cat][1]:SetPoint("TOPLEFT", self.frames[i][5], "TOPLEFT", inc*spacing, 0)
@@ -1251,17 +1251,21 @@ function MPOWA:TestAll()
 		if self.testAll then
 			self.testAll = false
 			for i=1, self.NumBuffs do
-				if not self.active[i] then
-					MPOWA:ApplyConfig(i)
-					_G("TextureFrame"..i):Hide()
+				if self.SAVE[i] and self.SAVE[i]["used"] then
+					if not self.active[i] then
+						MPOWA:ApplyConfig(i)
+						_G("TextureFrame"..i):Hide()
+					end
+					self.SAVE[i]["test"] = false
 				end
-				self.SAVE[i]["test"] = false
 			end
 		else
 			self.testAll = true
 			for i=1, self.NumBuffs do
-				MPOWA:ApplyConfig(i)
-				_G("TextureFrame"..i):Show()
+				if self.SAVE[i] and self.SAVE[i]["used"] then
+					MPOWA:ApplyConfig(i)
+					_G("TextureFrame"..i):Show()
+				end
 			end
 		end
 	end
