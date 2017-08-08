@@ -22,17 +22,20 @@ function MPOWA:Print(msg)
 end
 
 function MPOWA:GetGroup()
-	local num, type = GetNumPartyMembers(), "party"
-	if num <= 0 then
-		num = GetNumRaidMembers()
-		type = "raid"
-	end
-	if num > 0 then
-		for i=1, num do
-			local name = UN(type..i)
-			if self.RaidGroupMembers[name] then
-				self.groupByNames[name] = type..i
-				self.groupByUnit[type..i] = name
+	if UnitInRaid("player") then
+		for i=1, 40 do
+			local name = UN("raid"..i)
+			if name and self.RaidGroupMembers[name] then
+				self.groupByNames[name] = "raid"..i
+				self.groupByUnit["raid"..i] = name
+			end
+		end
+	elseif self:InParty() then
+		for i=1, 5 do
+			local name = UN("party"..i)
+			if name and self.RaidGroupMembers[name] then
+				self.groupByNames[name] = "party"..i
+				self.groupByUnit["party"..i] = name
 			end
 		end
 	end
