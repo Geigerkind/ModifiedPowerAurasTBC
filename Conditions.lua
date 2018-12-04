@@ -13,18 +13,7 @@ local UnitInRaid = UnitInRaid
 local GetBattlefieldStatus = GetBattlefieldStatus
 
 function MPOWA:IsMounted()
-	MPowa_Tooltip:SetOwner(UIParent, "ANCHOR_NONE")
-	for i=0,40 do
-		MPowa_Tooltip:ClearLines()
-		MPowa_Tooltip:SetPlayerBuff(GetPlayerBuff(i, "HELPFUL|PASSIVE"))
-		local desc = MPowa_TooltipTextLeft2:GetText()
-		if (not desc) then break end
-		if strfind(desc, MPOWA_SCRIPT_MOUNT_100) or strfind(desc, MPOWA_SCRIPT_MOUNT_60) then
-			self.mounted = true
-			return
-		end
-	end
-	self.mounted = false
+	self.mounted = IsMounted();
 end
 
 local UnitInParty = UnitInParty

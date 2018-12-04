@@ -61,8 +61,9 @@ end
 function Alpha:OnUpdate(elapsed)
     local properties = self.group.properties
 
-    self.progress = self.smoothing_func(self.time / self.duration).y
-
+    if (self.duration > 0) then
+        self.progress = self.smoothing_func(self.time / self.duration).y
+    end
     local frame = self.group.parent
 
     frame:SetAlpha(properties.alpha + self.progress * self.alpha_change)
