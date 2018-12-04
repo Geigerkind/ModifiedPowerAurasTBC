@@ -13,7 +13,7 @@ local UnitInRaid = UnitInRaid
 local GetBattlefieldStatus = GetBattlefieldStatus
 
 function MPOWA:IsMounted()
-	self.mounted = IsMounted();
+	self.mounted = IsMounted() ~= nil;
 end
 
 local UnitInParty = UnitInParty
