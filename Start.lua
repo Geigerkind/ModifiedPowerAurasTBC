@@ -246,8 +246,6 @@ end
 
 --------------- Post Init --------------------------
 
-MPOWA:SetScript("OnUpdate", function() MPOWA:OnUpdate(arg1) end)
-MPOWA:SetScript("OnEvent", function() MPOWA:OnEvent(event, arg1) end)
 MPOWA:RegisterEvent("VARIABLES_LOADED")
 MPOWA:RegisterEvent("UNIT_AURA")
 MPOWA:RegisterEvent("PLAYER_TARGET_CHANGED")
@@ -259,3 +257,6 @@ MPOWA:RegisterEvent("PLAYER_REGEN_ENABLED")
 MPOWA:RegisterEvent("UNIT_MANA")
 MPOWA:RegisterEvent("UNIT_RAGE")
 MPOWA:RegisterEvent("UNIT_ENERGY")
+MPOWA:RegisterEvent("PLAYER_LOGOUT")
+MPOWA:SetScript("OnUpdate", function() MPOWA:OnUpdate(arg1) end)
+MPOWA:SetScript("OnEvent", function() MPOWA:OnEvent(event, arg1) end)

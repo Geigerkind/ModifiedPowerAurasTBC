@@ -139,28 +139,33 @@ function MPOWA:OnEvent(event, arg1)
 			self:Iterate("target")
 		elseif event == "RAID_ROSTER_UPDATE" or event == "PARTY_MEMBERS_CHANGED" then
 			self:GetGroup()
+		elseif event == "UNIT_MANA" or event == "UNIT_RAGE" or event == "UNIT_ENERGY" then
+			if arg1 then
+				local unit = arg1
+				if (unit == "target") then 
+					self:Push("unitpower", unit, 45, false)
+				elseif (string.find(unit,"raid")) then
+					local st = string.sub(unit, 5)
+					if st and tonumber(st) then
+						self:Push("unitpower", unit, (tonumber(st) or 0)+45, false)
+					end
+				elseif (string.find(unit,"party")) then
+					local st = string.sub(unit, 6)
+					if st and tonumber(st) then
+						self:Push("unitpower", unit, (tonumber(st) or 0)+45, false)
+					end
+				end
+			end
+		elseif event == "PLAYER_LOGOUT" then
+			--for key, val in self.SAVE do
+			--	for ke, va in val do
+			--		MPOWA_SAVE[key][ke] = va;
+			--	end
+			--end
+			MPOWA_SAVE = table.copy(self.SAVE, true)
 		else
 			self:Iterate("player")
 		end
-	elseif event == "UNIT_MANA" or event == "UNIT_RAGE" or event == "UNIT_ENERGY" then
-		if arg1 then
-			local unit = arg1
-			if (unit == "target") then 
-				self:Push("unitpower", unit, 45, false)
-			elseif (string.find(unit,"raid")) then
-				local st = string.sub(unit, 5)
-				if st and tonumber(st) then
-					self:Push("unitpower", unit, (tonumber(st) or 0)+45, false)
-				end
-			elseif (string.find(unit,"party")) then
-				local st = string.sub(unit, 6)
-				if st and tonumber(st) then
-					self:Push("unitpower", unit, (tonumber(st) or 0)+45, false)
-				end
-			end
-		end
-	elseif event == "PLAYER_LOGOUT" then
-		MPOWA_SAVE = table.copy(self.SAVE, true)
 	else
 		self:Init()
 		self:GetGroup()
